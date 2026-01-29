@@ -130,6 +130,23 @@ const Experiences = () => {
       ],
       note: "Lunch is not included in the price.",
     },
+    {
+      image: vineyardTour,
+      title: "Valparaíso & Viña del Mar",
+      subtitle: "City Tour",
+      itinerary: [
+        { time: "10:00", activity: "Hotel pick up" },
+        { time: "10:30", activity: "Viña del Mar city tour" },
+        { time: "12:00", activity: "Valparaíso city tour" },
+        { time: "14:00", activity: "Optional boat trip in the bay of Valparaíso" },
+        { time: "15:00", activity: "Hotel drop off" },
+      ],
+      includes: [
+        "Transport with driver and guide",
+        "City tours of both Viña del Mar and Valparaíso",
+      ],
+      note: "Boat trip is optional and not included in the price.",
+    },
   ];
 
   return (
