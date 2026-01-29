@@ -1,82 +1,90 @@
-import { Clock, Users, Wine, MapPin } from "lucide-react";
+import { Clock, Users, Wine, MapPin, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import wineCellar from "@/assets/wine-cellar.jpg";
 import vineyardTour from "@/assets/vineyard-tour.jpg";
 import wineTasting from "@/assets/wine-tasting.jpg";
 
-interface ExperienceCardProps {
+interface TourCardProps {
   image: string;
   title: string;
   subtitle: string;
-  description: string;
-  duration: string;
-  groupSize: string;
-  price: string;
-  featured?: boolean;
+  itinerary: { time: string; activity: string }[];
+  includes: string[];
+  note?: string;
 }
 
-const ExperienceCard = ({
+const TourCard = ({
   image,
   title,
   subtitle,
-  description,
-  duration,
-  groupSize,
-  price,
-  featured = false,
-}: ExperienceCardProps) => {
+  itinerary,
+  includes,
+  note,
+}: TourCardProps) => {
   return (
-    <div
-      className={`group relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-500 ${
-        featured ? "lg:col-span-2 lg:row-span-2" : ""
-      }`}
-    >
-      <div
-        className={`relative overflow-hidden ${
-          featured ? "h-72 lg:h-full" : "h-56"
-        }`}
-      >
+    <div className="group relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-500">
+      <div className="relative overflow-hidden h-64">
         <img
           src={image}
           alt={title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-wine-charcoal/80 via-wine-charcoal/20 to-transparent" />
-
-        {featured && (
-          <span className="absolute top-4 right-4 bg-accent text-accent-foreground px-3 py-1 rounded text-xs font-body font-semibold uppercase tracking-wide">
-            Most Popular
-          </span>
-        )}
       </div>
 
-      <div className="p-6">
+      <div className="p-6 lg:p-8">
         <p className="font-body text-primary text-xs tracking-[0.15em] uppercase mb-2">
           {subtitle}
         </p>
-        <h3 className="font-display text-2xl text-foreground font-semibold mb-3">
+        <h3 className="font-display text-2xl lg:text-3xl text-foreground font-semibold mb-6">
           {title}
         </h3>
-        <p className="font-body text-muted-foreground text-sm leading-relaxed mb-4">
-          {description}
-        </p>
 
-        <div className="flex flex-wrap gap-4 mb-6 text-sm text-muted-foreground">
-          <span className="flex items-center gap-1.5">
-            <Clock size={14} className="text-primary" />
-            {duration}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Users size={14} className="text-primary" />
-            {groupSize}
-          </span>
+        {/* Itinerary */}
+        <div className="mb-6">
+          <h4 className="font-body text-sm font-semibold text-foreground uppercase tracking-wide mb-4">
+            Itinerary
+          </h4>
+          <div className="space-y-3">
+            {itinerary.map((item, index) => (
+              <div key={index} className="flex gap-4">
+                <span className="font-body text-primary font-semibold text-sm min-w-[60px]">
+                  {item.time}
+                </span>
+                <span className="font-body text-muted-foreground text-sm">
+                  {item.activity}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-border">
+        {/* Includes */}
+        <div className="mb-6">
+          <h4 className="font-body text-sm font-semibold text-foreground uppercase tracking-wide mb-4">
+            Includes
+          </h4>
+          <ul className="space-y-2">
+            {includes.map((item, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <Check size={16} className="text-primary mt-0.5 flex-shrink-0" />
+                <span className="font-body text-muted-foreground text-sm">
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {note && (
+          <p className="font-body text-xs text-muted-foreground italic mb-6">
+            {note}
+          </p>
+        )}
+
+        <div className="flex items-center justify-between pt-6 border-t border-border">
           <div>
-            <span className="font-body text-xs text-muted-foreground">From</span>
-            <p className="font-display text-2xl text-foreground font-bold">
-              {price}
+            <p className="font-display text-lg text-foreground font-semibold">
+              For prices contact us
             </p>
           </div>
           <Button variant="wine" size="sm" asChild>
@@ -89,37 +97,38 @@ const ExperienceCard = ({
 };
 
 const Experiences = () => {
-  const experiences = [
+  const tours = [
     {
       image: vineyardTour,
-      title: "Casablanca Valley Tour",
-      subtitle: "Full Day Experience",
-      description:
-        "Explore three prestigious wineries with guided tastings, gourmet lunch, and stunning vineyard walks. The quintessential Chilean wine experience.",
-      duration: "8 hours",
-      groupSize: "Max 8 guests",
-      price: "$189",
-      featured: true,
-    },
-    {
-      image: wineCellar,
-      title: "Cellar & Barrel Tasting",
-      subtitle: "Premium Experience",
-      description:
-        "Go behind the scenes with exclusive cellar access and barrel tastings at boutique wineries.",
-      duration: "5 hours",
-      groupSize: "Max 6 guests",
-      price: "$149",
+      title: "Classic Wine Tour",
+      subtitle: "Half Day Experience",
+      itinerary: [
+        { time: "9:00", activity: "Hotel pick up" },
+        { time: "10:30", activity: "Bodegas RE vineyard tour and premium tasting" },
+        { time: "12:30", activity: "Casas del Bosque vineyard tour and tasting" },
+      ],
+      includes: [
+        "Transport with driver and guide",
+        "Vineyard entrance fees",
+        "Tours and tastings at both wineries",
+      ],
     },
     {
       image: wineTasting,
-      title: "Sunset Wine & Dine",
-      subtitle: "Evening Experience",
-      description:
-        "Watch the sun set over the vineyards while enjoying premium wines paired with local cuisine.",
-      duration: "4 hours",
-      groupSize: "Max 10 guests",
-      price: "$129",
+      title: "Wine & Dine Tour",
+      subtitle: "Full Day Experience",
+      itinerary: [
+        { time: "9:00", activity: "Hotel pick up" },
+        { time: "10:30", activity: "Bodegas RE vineyard tour and premium tasting" },
+        { time: "12:30", activity: "Casas del Bosque vineyard tour and tasting" },
+        { time: "14:00", activity: "Lunch at Casas del Bosque vineyard restaurant" },
+      ],
+      includes: [
+        "Transport with driver and guide",
+        "Vineyard entrance fees",
+        "Tours and tastings at both wineries",
+      ],
+      note: "Lunch is not included in the price.",
     },
   ];
 
@@ -129,22 +138,22 @@ const Experiences = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="font-body text-primary tracking-[0.2em] uppercase text-sm mb-4">
-            Curated Experiences
+            Our Tours
           </p>
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground font-semibold leading-tight mb-6">
             Unforgettable
             <span className="text-elegant text-primary block">Wine Journeys</span>
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            Each tour is thoughtfully designed to showcase the best of Chilean
-            wine country. Small groups ensure a personalized, intimate experience.
+            Explore the prestigious Casablanca Valley with our expertly curated
+            wine tours. Small groups ensure a personalized, intimate experience.
           </p>
         </div>
 
-        {/* Experience Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {experiences.map((exp, index) => (
-            <ExperienceCard key={index} {...exp} />
+        {/* Tour Cards Grid */}
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+          {tours.map((tour, index) => (
+            <TourCard key={index} {...tour} />
           ))}
         </div>
 
@@ -155,10 +164,10 @@ const Experiences = () => {
               <Wine className="text-primary" size={24} />
             </div>
             <h4 className="font-display text-xl font-semibold mb-2">
-              Expert Sommeliers
+              Expert Guides
             </h4>
             <p className="text-muted-foreground text-sm">
-              All tours led by certified wine professionals
+              All tours led by knowledgeable local guides
             </p>
           </div>
           <div className="p-6">
