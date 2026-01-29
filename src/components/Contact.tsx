@@ -50,10 +50,10 @@ const Contact = () => {
                     Call Us
                   </p>
                   <a
-                    href="tel:+56912345678"
+                    href="tel:+56984283502"
                     className="font-body hover:text-wine-gold transition-colors"
                   >
-                    +56 9 1234 5678
+                    +56 9 8428 3502
                   </a>
                 </div>
               </div>
