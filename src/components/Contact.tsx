@@ -1,7 +1,10 @@
 import { Mail, Phone, MapPin, Clock, Instagram, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useForm, ValidationError } from '@formspree/react';
 
 const Contact = () => {
+  const [state, handleSubmit] = useForm("xwvneape"); // Replace with your form ID
+
   return (
     <section id="contact" className="py-24 lg:py-32 bg-primary text-primary-foreground">
       <div className="container mx-auto px-6">
@@ -107,86 +110,166 @@ const Contact = () => {
 
           {/* Right Column - Form */}
           <div className="bg-card text-card-foreground rounded-lg p-8 lg:p-10 shadow-elevated">
-            <h3 className="font-display text-2xl font-semibold mb-6">
-              Request a Tour
-            </h3>
-            <form className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="font-body text-sm text-muted-foreground block mb-2">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                    placeholder="John"
-                  />
+            {state.succeeded ? (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 rounded-full bg-wine-gold/20 flex items-center justify-center mx-auto mb-4">
+                  <Mail className="text-wine-gold" size={24} />
                 </div>
-                <div>
-                  <label className="font-body text-sm text-muted-foreground block mb-2">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                    placeholder="Doe"
-                  />
-                </div>
+                <h3 className="font-display text-2xl font-semibold mb-3">
+                  Thank You!
+                </h3>
+                <p className="font-body text-muted-foreground">
+                  We've received your inquiry and will get back to you within 24 hours.
+                </p>
               </div>
+            ) : (
+              <>
+                <h3 className="font-display text-2xl font-semibold mb-6">
+                  Request a Tour
+                </h3>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="firstName" className="font-body text-sm text-muted-foreground block mb-2">
+                        First Name
+                      </label>
+                      <input
+                        id="firstName"
+                        type="text"
+                        name="firstName"
+                        required
+                        className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                        placeholder="John"
+                      />
+                      <ValidationError
+                        prefix="First Name"
+                        field="firstName"
+                        errors={state.errors}
+                        className="text-destructive text-sm mt-1"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="lastName" className="font-body text-sm text-muted-foreground block mb-2">
+                        Last Name
+                      </label>
+                      <input
+                        id="lastName"
+                        type="text"
+                        name="lastName"
+                        required
+                        className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                        placeholder="Doe"
+                      />
+                      <ValidationError
+                        prefix="Last Name"
+                        field="lastName"
+                        errors={state.errors}
+                        className="text-destructive text-sm mt-1"
+                      />
+                    </div>
+                  </div>
 
-              <div>
-                <label className="font-body text-sm text-muted-foreground block mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                  placeholder="john@example.com"
-                />
-              </div>
+                  <div>
+                    <label htmlFor="email" className="font-body text-sm text-muted-foreground block mb-2">
+                      Email *
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      required
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                      className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      placeholder="john@example.com"
+                    />
+                    <ValidationError
+                      prefix="Email"
+                      field="email"
+                      errors={state.errors}
+                      className="text-destructive text-sm mt-1 block"
+                    />
+                  </div>
 
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="font-body text-sm text-muted-foreground block mb-2">
-                    Preferred Date
-                  </label>
-                  <input
-                    type="date"
-                    className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                  />
-                </div>
-                <div>
-                  <label className="font-body text-sm text-muted-foreground block mb-2">
-                    Number of Guests
-                  </label>
-                  <select className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
-                    <option>1-2 guests</option>
-                    <option>3-4 guests</option>
-                    <option>5-6 guests</option>
-                    <option>7+ guests</option>
-                  </select>
-                </div>
-              </div>
 
-              <div>
-                <label className="font-body text-sm text-muted-foreground block mb-2">
-                  Message (optional)
-                </label>
-                <textarea
-                  rows={4}
-                  className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
-                  placeholder="Tell us about your preferences..."
-                />
-              </div>
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="date" className="font-body text-sm text-muted-foreground block mb-2">
+                        Preferred Date
+                      </label>
+                      <input
+                        id="date"
+                        type="date"
+                        name="date"
+                        required
+                        className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      />
+                      <ValidationError
+                        prefix="Date"
+                        field="date"
+                        errors={state.errors}
+                        className="text-destructive text-sm mt-1"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="guests" className="font-body text-sm text-muted-foreground block mb-2">
+                        Number of Guests
+                      </label>
+                      <select
+                        id="guests"
+                        name="guests"
+                        required
+                        className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      >
+                        <option value="">Select...</option>
+                        <option value="1-2">1-2 guests</option>
+                        <option value="3-4">3-4 guests</option>
+                        <option value="5-6">5-6 guests</option>
+                        <option value="7+">7+ guests</option>
+                      </select>
+                      <ValidationError
+                        prefix="Guests"
+                        field="guests"
+                        errors={state.errors}
+                        className="text-destructive text-sm mt-1"
+                      />
+                    </div>
+                  </div>
 
-              <Button variant="wine" size="lg" className="w-full">
-                Send Inquiry
-              </Button>
+                  <div>
+                    <label htmlFor="message" className="font-body text-sm text-muted-foreground block mb-2">
+                      Message (optional)
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      className="w-full px-4 py-3 bg-background border border-input rounded-md font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+                      placeholder="Tell us about your preferences..."
+                    />
+                    <ValidationError
+                      prefix="Message"
+                      field="message"
+                      errors={state.errors}
+                      className="text-destructive text-sm mt-1"
+                    />
+                  </div>
 
-              <p className="font-body text-xs text-muted-foreground text-center">
-                We typically respond within 24 hours
-              </p>
-            </form>
+                  <Button
+                    variant="wine"
+                    size="lg"
+                    className="w-full"
+                    type="submit"
+                    disabled={state.submitting}
+                  >
+                    {state.submitting ? 'Sending...' : 'Send Inquiry'}
+                  </Button>
+
+                  <p className="font-body text-xs text-muted-foreground text-center">
+                    We typically respond within 24 hours
+                  </p>
+                </form>
+              </>
+            )}
           </div>
         </div>
       </div>
