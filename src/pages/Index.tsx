@@ -6,6 +6,7 @@ import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 const Index = () => {
   return (
@@ -15,6 +16,7 @@ const Index = () => {
         description="Discover Chile's finest vineyards with expert-led tours through Casablanca Valley. World-class wine tastings and unforgettable experiences."
         canonicalUrl="https://winetoursvalparaiso.com"
       />
+      <StructuredData />
       <Header />
       <Hero />
       <About />
