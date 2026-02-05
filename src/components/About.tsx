@@ -10,7 +10,7 @@ const About = () => {
             <div className="relative overflow-hidden rounded-lg shadow-elevated">
               <img
                 src={wineTasting}
-                alt="Wine tasting experience"
+                alt="Wine tasting Valparaíso region experience"
                 className="w-full h-[500px] object-cover"
               />
             </div>
