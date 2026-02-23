@@ -30,16 +30,22 @@ const About = () => {
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
                 For over a decade, Wine Tours Valparaíso has been the premier
-                guide to Chile's magnificent wine country. Our intimate tours
-                take you through the heart of the Casablanca Valley, renowned
-                for its exceptional cool-climate wines.
+                guide to Chile's magnificent wine country. Our intimate wine
+                excursions take you through the heart of the Casablanca Valley,
+                renowned for its exceptional cool-climate wines.
               </p>
               <p>
                 Led by certified sommeliers and local experts, each journey is
-                crafted to immerse you in the rich traditions of Chilean
-                viticulture. From boutique family vineyards to award-winning
-                estates, we curate experiences that celebrate the art of
-                winemaking.
+                crafted to immerse you in the best vineyards near Valparaiso.
+                From boutique family vineyards to award-winning estates, we
+                curate the best experiences that celebrate the rich traditions
+                of Chilean viticulture.
+              </p>
+              <p>
+                We provide private wine tours and Valparaiso city tours or a
+                shared experience depending on your necessity. We are also able
+                to handle any size of group with cars and buses at our disposal
+                to provide you with a tour in style and comfort.
               </p>
             </div>
 
