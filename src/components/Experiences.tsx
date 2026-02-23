@@ -2,6 +2,7 @@ import { Clock, Users, Wine, MapPin, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import vineyardTour from "@/assets/vineyard-tour.jpg";
 import wineTasting from "@/assets/wine-tasting.jpg";
+import valparaisoHills from "@/assets/valparaiso-hills.jpg";
 
 interface TourCardProps {
   image: string;
@@ -153,7 +154,7 @@ const Experiences = () => {
       note: "Lunch is not included in the price.",
     },
     {
-      image: vineyardTour,
+      image: valparaisoHills,
       title: "Valparaíso & Viña del Mar",
       subtitle: "City Tour",
       itinerary: [
