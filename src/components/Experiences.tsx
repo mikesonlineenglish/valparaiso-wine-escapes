@@ -131,6 +131,28 @@ const Experiences = () => {
       note: "Lunch is not included in the price.",
     },
     {
+      image: wineTasting,
+      title: "Wine Tours from Santiago",
+      subtitle: "Full Day Experience",
+      itinerary: [
+        { time: "8:00", activity: "Hotel pick up in Santiago" },
+        { time: "10:00", activity: "Arrival in Casablanca Valley" },
+        { time: "10:30", activity: "Bodegas RE vineyard tour and premium tasting" },
+        { time: "12:30", activity: "Casas del Bosque vineyard tour and tasting" },
+        { time: "14:00", activity: "Lunch at Casas del Bosque vineyard restaurant" },
+        { time: "16:00", activity: "Scenic drive to Valparaíso" },
+        { time: "16:30", activity: "Walking tour of Valparaíso's colorful hills" },
+        { time: "18:00", activity: "Drop off in Valparaíso or return to Santiago" },
+      ],
+      includes: [
+        "Transport with driver and guide from Santiago",
+        "Vineyard entrance fees",
+        "Tours and tastings at both wineries",
+        "Walking tour of Valparaíso",
+      ],
+      note: "Lunch is not included in the price.",
+    },
+    {
       image: vineyardTour,
       title: "Valparaíso & Viña del Mar",
       subtitle: "City Tour",
