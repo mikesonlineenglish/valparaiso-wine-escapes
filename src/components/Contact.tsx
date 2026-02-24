@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Clock, Instagram, Facebook } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Instagram, Facebook, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useForm, ValidationError } from '@formspree/react';
 
@@ -57,6 +57,15 @@ const Contact = () => {
                     className="font-body hover:text-wine-gold transition-colors"
                   >
                     +56 9 8428 3502
+                  </a>
+                  <a
+                    href="https://wa.me/+56984283502"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-body flex items-center gap-2 text-sm hover:text-wine-gold transition-colors mt-1"
+                  >
+                    <MessageCircle size={16} className="text-wine-gold" />
+                    WhatsApp Us
                   </a>
                 </div>
               </div>
