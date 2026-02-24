@@ -1,4 +1,5 @@
 import logo from "@/assets/logo.jpg";
+import tripadvisor from "@/assets/tripadvisor.png";
 
 const Footer = () => {
   return (
@@ -7,7 +8,10 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-10">
           {/* Logo & About */}
           <div className="md:col-span-2">
-            <img src={logo} alt="Wine Tours Valparaiso" className="h-16 mb-6" />
+            <div className="flex items-center gap-4 mb-6">
+              <img src={logo} alt="Wine Tours Valparaiso" className="h-16" />
+              <img src={tripadvisor} alt="TripAdvisor Certificate of Excellence 2015" className="h-16" />
+            </div>
             <p className="font-body text-wine-cream/70 leading-relaxed max-w-md">
               Your premier guide to Chile's magnificent wine country. Experience
               the finest vineyards, exceptional wines, and unforgettable moments
