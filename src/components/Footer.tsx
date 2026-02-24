@@ -10,7 +10,9 @@ const Footer = () => {
           <div className="md:col-span-2">
             <div className="flex items-center gap-4 mb-6">
               <img src={logo} alt="Wine Tours Valparaiso" className="h-16" />
-              <img src={tripadvisor} alt="TripAdvisor Certificate of Excellence 2015" className="h-16" />
+              <a href="https://www.tripadvisor.com/Attraction_Review-g294306-d2639554-Reviews-Wine_Tours_Valparaiso-Valparaiso_Valparaiso_Region.html" target="_blank" rel="noopener noreferrer">
+                <img src={tripadvisor} alt="TripAdvisor Certificate of Excellence 2015" className="h-16" />
+              </a>
             </div>
             <p className="font-body text-wine-cream/70 leading-relaxed max-w-md">
               Your premier guide to Chile's magnificent wine country. Experience
