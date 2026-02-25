@@ -2,7 +2,7 @@
   "name": "vite_react_shadcn_ts",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://mikesonlineenglish.github.io/valparaiso-wine-escapes",
+  "homepage": "https://winetoursvalparaiso.com",
   "type": "module",
   "scripts": {
     "dev": "vite",
