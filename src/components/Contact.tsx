@@ -102,13 +102,13 @@ const Contact = () => {
               </p>
               <div className="flex gap-4">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/wine.tours.valparaiso/"
                   className="w-10 h-10 rounded-full bg-wine-gold/20 flex items-center justify-center hover:bg-wine-gold/30 transition-colors"
                 >
                   <Instagram size={18} className="text-wine-gold" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.facebook.com/winetoursvalparaiso/"
                   className="w-10 h-10 rounded-full bg-wine-gold/20 flex items-center justify-center hover:bg-wine-gold/30 transition-colors"
                 >
                   <Facebook size={18} className="text-wine-gold" />
