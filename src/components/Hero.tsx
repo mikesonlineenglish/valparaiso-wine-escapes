@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-vineyard.jpg";
+import { trackEvent } from "@/lib/analytics";
 
 const Hero = () => {
   return (
@@ -30,10 +31,20 @@ const Hero = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-delay-2">
             <Button variant="hero" size="xl" asChild>
-              <a href="#experiences">Explore Tours</a>
+              <a
+                href="#experiences"
+                onClick={() => trackEvent("cta_click", { button: "explore_tours_hero" })}
+              >
+                Explore Tours
+              </a>
             </Button>
             <Button variant="heroOutline" size="xl" asChild>
-              <a href="#contact">Book Your Experience</a>
+              <a
+                href="#contact"
+                onClick={() => trackEvent("cta_click", { button: "book_experience_hero" })}
+              >
+                Book Your Experience
+              </a>
             </Button>
           </div>
         </div>
@@ -43,6 +54,7 @@ const Hero = () => {
       <a
         href="#about"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 text-wine-cream/70 hover:text-wine-cream transition-colors animate-bounce"
+        onClick={() => trackEvent("scroll_click", { button: "scroll_arrow_hero" })}
       >
         <ChevronDown size={32} />
       </a>

@@ -1,7 +1,9 @@
 import { Clock, Users, Wine, MapPin, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
 import vineyardTour from "@/assets/vineyard-tour.jpg";
 import wineTasting from "@/assets/wine-tasting.jpg";
+import wineDine from "@/assets/wine-dine.jpg";
 import valparaisoHills from "@/assets/valparaiso-hills.jpg";
 
 interface TourCardProps {
@@ -89,7 +91,10 @@ const TourCard = ({
             </p>
           </div>
           <Button variant="wine" size="sm" asChild>
-            <a href="#contact">Book Now</a>
+            <a
+              href="#contact"
+              onClick={() => trackEvent("cta_click", { button: `book_now_${title.toLowerCase().replace(/ /g, "_")}` })}
+            >Book Now</a>
           </Button>
         </div>
       </div>
@@ -115,7 +120,7 @@ const Experiences = () => {
       ],
     },
     {
-      image: wineTasting,
+      image: wineDine,
       title: "Wine & Dine Tour",
       subtitle: "Full Day Experience",
       itinerary: [

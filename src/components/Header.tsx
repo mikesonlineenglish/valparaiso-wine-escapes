@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.jpg";
+import { trackEvent } from "@/lib/analytics";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,6 +19,7 @@ const Header = () => {
     { href: "#about", label: "About" },
     { href: "#experiences", label: "Experiences" },
     { href: "#testimonials", label: "Testimonials" },
+    { href: "#price-calculator", label: "Get a Quote" },
     { href: "#contact", label: "Contact" },
   ];
 
@@ -46,6 +48,7 @@ const Header = () => {
             <a
               key={link.href}
               href={link.href}
+              onClick={() => trackEvent("nav_click", { button: link.label.toLowerCase().replace(/ /g, "_") })}
               className={`font-body text-sm tracking-wide uppercase transition-colors duration-300 ${
                 isScrolled
                   ? "text-foreground hover:text-primary"
@@ -57,6 +60,7 @@ const Header = () => {
           ))}
           <a
             href="#contact"
+            onClick={() => trackEvent("cta_click", { button: "book_now_header" })}
             className={`font-body text-sm tracking-wide uppercase px-5 py-2 rounded transition-all duration-300 ${
               isScrolled
                 ? "bg-primary text-primary-foreground hover:bg-primary/90"
@@ -92,7 +96,10 @@ const Header = () => {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  trackEvent("nav_click", { button: `${link.label.toLowerCase().replace(/ /g, "_")}_mobile` });
+                }}
                 className="font-body text-sm tracking-wide uppercase text-foreground hover:text-primary py-2 border-b border-border"
               >
                 {link.label}
@@ -100,7 +107,10 @@ const Header = () => {
             ))}
             <a
               href="#contact"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                trackEvent("cta_click", { button: "book_now_header_mobile" });
+              }}
               className="font-body text-sm tracking-wide uppercase px-5 py-3 rounded bg-primary text-primary-foreground text-center mt-2"
             >
               Book Now

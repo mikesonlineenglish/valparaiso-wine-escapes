@@ -9,7 +9,7 @@ const StructuredData = () => {
       "Premium wine tours through Chile's Casablanca Valley and city tours of Valparaíso and Viña del Mar.",
     url: "https://winetoursvalparaiso.com",
     telephone: "+56 9 8428 3502",
-    email: "info@winetoursvalparaiso.com",
+    email: "winetoursvalpo@gmail.com",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Valparaíso",

@@ -1,9 +1,15 @@
 import { Mail, Phone, MapPin, Clock, Instagram, Facebook, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useForm, ValidationError } from '@formspree/react';
+import { trackEvent } from "@/lib/analytics";
 
 const Contact = () => {
-  const [state, handleSubmit] = useForm("xwvneape"); // Replace with your form ID
+  const [state, handleSubmit] = useForm("xwvneape");
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    trackEvent("form_submit", { form: "contact_form" });
+    handleSubmit(e);
+  };
 
   return (
     <section id="contact" className="py-24 lg:py-32 bg-primary text-primary-foreground">
@@ -36,10 +42,11 @@ const Contact = () => {
                     Email Us
                   </p>
                   <a
-                    href="mailto:info@winetoursvalparaiso.com"
+                    href="mailto:winetoursvalpo@gmail.com"
+                    onClick={() => trackEvent("email_click", { button: "email_contact" })}
                     className="font-body hover:text-wine-gold transition-colors"
                   >
-                    info@winetoursvalparaiso.com
+                    winetoursvalpo@gmail.com
                   </a>
                 </div>
               </div>
@@ -54,6 +61,7 @@ const Contact = () => {
                   </p>
                   <a
                     href="tel:+56984283502"
+                    onClick={() => trackEvent("phone_click", { button: "phone_contact" })}
                     className="font-body hover:text-wine-gold transition-colors"
                   >
                     +56 9 8428 3502
@@ -62,6 +70,7 @@ const Contact = () => {
                     href="https://wa.me/+56984283502"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackEvent("whatsapp_click", { button: "whatsapp_contact" })}
                     className="font-body flex items-center gap-2 text-sm hover:text-wine-gold transition-colors mt-1"
                   >
                     <MessageCircle size={16} className="text-wine-gold" />
@@ -103,12 +112,14 @@ const Contact = () => {
               <div className="flex gap-4">
                 <a
                   href="https://www.instagram.com/wine.tours.valparaiso/"
+                  onClick={() => trackEvent("social_click", { button: "instagram" })}
                   className="w-10 h-10 rounded-full bg-wine-gold/20 flex items-center justify-center hover:bg-wine-gold/30 transition-colors"
                 >
                   <Instagram size={18} className="text-wine-gold" />
                 </a>
                 <a
                   href="https://www.facebook.com/winetoursvalparaiso/"
+                  onClick={() => trackEvent("social_click", { button: "facebook" })}
                   className="w-10 h-10 rounded-full bg-wine-gold/20 flex items-center justify-center hover:bg-wine-gold/30 transition-colors"
                 >
                   <Facebook size={18} className="text-wine-gold" />
@@ -136,7 +147,7 @@ const Contact = () => {
                 <h3 className="font-display text-2xl font-semibold mb-6">
                   Request a Tour
                 </h3>
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={onSubmit} className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label htmlFor="firstName" className="font-body text-sm text-muted-foreground block mb-2">
@@ -198,7 +209,6 @@ const Contact = () => {
                       className="text-destructive text-sm mt-1 block"
                     />
                   </div>
-
 
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
