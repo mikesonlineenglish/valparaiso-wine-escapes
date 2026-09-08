@@ -1,0 +1,1 @@
+function e(e){if(!e||e.startsWith(`#`)||e.startsWith(`mailto:`)||e.startsWith(`tel:`)||!e.startsWith(`/`)||e.startsWith(`//`)||/^[a-z][a-z0-9+.-]*:/i.test(e)||e===`/`)return e;let t=e.match(/^([^?#]*)([?#].*)?$/),n=t?t[1]:e,r=t&&t[2]?t[2]:``;return n.endsWith(`/`)||n.slice(n.lastIndexOf(`/`)+1).includes(`.`)?e:`${n}/${r}`}export{e as t};

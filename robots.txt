@@ -10,7 +10,26 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# AI crawlers / assistants
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: *
 Allow: /
 
-Sitemap: https://winetoursvalparaiso.com/sitemap.xml
+Sitemap: https://winetoursvalparaiso.com/sitemap-index.xml

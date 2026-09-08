@@ -1,0 +1,1 @@
+var e=(e,t)=>{typeof window<`u`&&window.gtag&&window.gtag(`event`,e,t)};export{e as t};
