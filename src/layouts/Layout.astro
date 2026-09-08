@@ -4,20 +4,27 @@ import "../index.css";
 interface Props {
   title: string;
   description: string;
-  canonicalUrl: string;
   ogImage?: string;
   ogType?: string;
   twitterHandle?: string;
+  /** For error/utility pages with no single real URL (e.g. 404 — GitHub Pages serves
+   * 404.html flatly for any unmatched path, so a self-referencing canonical would be
+   * wrong). Skips the canonical tag and sets robots to noindex. */
+  noindex?: boolean;
 }
 
 const {
   title,
   description,
-  canonicalUrl,
   ogImage = "https://winetoursvalparaiso.com/wtv-og.png",
   ogType = "website",
   twitterHandle = "@winetoursvalpo",
+  noindex = false,
 } = Astro.props;
+
+// Self-referencing canonical, derived from the site config + the actual route being
+// rendered — never a hardcoded string, so it can't drift from what's actually served.
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -35,8 +42,7 @@ const {
       content="wine tours, Valparaiso, Chile, Casablanca Valley, wine tasting, vineyard tours, Chilean wine"
     />
 
-    <link rel="canonical" href={canonicalUrl} />
-    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={ogType} />
@@ -59,8 +65,8 @@ const {
     <meta name="twitter:image" content={ogImage} />
 
     <!-- Additional SEO -->
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
+    <meta name="googlebot" content={noindex ? "noindex, follow" : "index, follow"} />
 
     <!-- Prerender.io verification - configure middleware at your CDN/hosting level -->
     <meta name="prerender-status-code" content="200" />

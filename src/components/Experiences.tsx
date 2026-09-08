@@ -2,6 +2,7 @@ import { Clock, Users, Wine, MapPin, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
 import { TOURS_DATA } from "@/data/tours";
+import { normalizeHref } from "@/utils/url";
 
 interface TourCardProps {
   slug: string;
@@ -25,7 +26,7 @@ const TourCard = ({
   return (
     <div className="group relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-2xl hover:-translate-y-1 transition-all duration-500">
       <a
-        href={`/tours/${slug}`}
+        href={normalizeHref(`/tours/${slug}`)}
         onClick={() => trackEvent("cta_click", { button: `view_details_${title.toLowerCase().replace(/ /g, "_")}` })}
         className="absolute inset-0 z-10"
         aria-label={`View full details for ${title}`}

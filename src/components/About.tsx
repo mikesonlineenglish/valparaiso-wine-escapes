@@ -50,7 +50,7 @@ const About = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 mt-10 pt-10 border-t border-border">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-10 pt-10 border-t border-border text-center sm:text-left">
               <div>
                 <p className="font-display text-4xl text-primary font-bold">15+</p>
                 <p className="font-body text-sm text-muted-foreground mt-1">
@@ -63,7 +63,7 @@ const About = () => {
                   Partner Wineries
                 </p>
               </div>
-              <div>
+              <div className="col-span-2 sm:col-span-1">
                 <p className="font-display text-4xl text-primary font-bold">Hundreds</p>
                 <p className="font-body text-sm text-muted-foreground mt-1">
                   of Happy Guests

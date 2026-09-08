@@ -1,6 +1,7 @@
 import logo from "@/assets/logo.jpg?url";
 import tripadvisor from "@/assets/tripadvisor.png?url";
 import { TOURS_DATA } from "@/data/tours";
+import { normalizeHref } from "@/utils/url";
 
 const QUICK_LINKS = [
   { label: "About", href: "/#about" },
@@ -38,7 +39,7 @@ const Footer = () => {
               {QUICK_LINKS.map((link) => (
                 <li key={link.label}>
                   <a
-                    href={link.href}
+                    href={normalizeHref(link.href)}
                     className="font-body text-wine-cream/70 hover:text-wine-gold transition-colors text-sm"
                   >
                     {link.label}
@@ -57,7 +58,7 @@ const Footer = () => {
               {TOURS_DATA.map((tour) => (
                 <li key={tour.slug}>
                   <a
-                    href={`/tours/${tour.slug}`}
+                    href={normalizeHref(`/tours/${tour.slug}`)}
                     className="font-body text-wine-cream/70 hover:text-wine-gold transition-colors text-sm"
                   >
                     {tour.title}

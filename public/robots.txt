@@ -32,4 +32,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://winetoursvalparaiso.com/sitemap.xml
+Sitemap: https://winetoursvalparaiso.com/sitemap-index.xml

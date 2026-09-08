@@ -9,15 +9,17 @@ import PriceCalculator from "../components/PriceCalculator";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+
 const localBusiness = {
   "@context": "https://schema.org",
   "@type": ["LocalBusiness", "TourOperator"],
   name: "Wine Tours Valparaíso",
   description:
     "Premium wine tours through Chile's Casablanca Valley and city tours of Valparaíso and Viña del Mar.",
-  url: "https://winetoursvalparaiso.com",
+  url: pageUrl,
   telephone: "+56 9 8428 3502",
-  email: "winetoursvalpo@gmail.com",
+  email: "info@winetoursvalparaiso.com",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Cerro Alegre",
@@ -146,7 +148,6 @@ const tours = [
 <Layout
   title="Wine Tours Valparaíso | Premium Chilean Wine Experiences"
   description="Discover Chile's finest vineyards with expert-led tours through Casablanca Valley. World-class wine tastings and unforgettable experiences."
-  canonicalUrl="https://winetoursvalparaiso.com"
 >
   <Fragment slot="head">
     <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusiness)} />

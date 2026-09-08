@@ -42,11 +42,11 @@ const Contact = () => {
                     Email Us
                   </p>
                   <a
-                    href="mailto:winetoursvalpo@gmail.com"
+                    href="mailto:info@winetoursvalparaiso.com"
                     onClick={() => trackEvent("email_click", { button: "email_contact" })}
                     className="font-body hover:text-wine-gold transition-colors"
                   >
-                    winetoursvalpo@gmail.com
+                    info@winetoursvalparaiso.com
                   </a>
                 </div>
               </div>

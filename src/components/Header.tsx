@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.jpg?url";
 import { trackEvent } from "@/lib/analytics";
+import { normalizeHref } from "@/utils/url";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,7 +48,7 @@ const Header = () => {
           {navLinks.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={normalizeHref(link.href)}
               onClick={() => trackEvent("nav_click", { button: link.label.toLowerCase().replace(/ /g, "_") })}
               className={`font-body text-sm tracking-wide uppercase transition-colors duration-300 ${
                 isScrolled
@@ -95,7 +96,7 @@ const Header = () => {
             {navLinks.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={normalizeHref(link.href)}
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   trackEvent("nav_click", { button: `${link.label.toLowerCase().replace(/ /g, "_")}_mobile` });
