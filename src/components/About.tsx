@@ -1,4 +1,4 @@
-import wineTasting from "@/assets/wine-tasting.jpg";
+import wineTasting from "@/assets/wine-tasting.jpg?url";
 
 const About = () => {
   return (
@@ -52,21 +52,21 @@ const About = () => {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 mt-10 pt-10 border-t border-border">
               <div>
-                <p className="font-display text-4xl text-primary font-bold">10+</p>
+                <p className="font-display text-4xl text-primary font-bold">15+</p>
                 <p className="font-body text-sm text-muted-foreground mt-1">
                   Years Experience
                 </p>
               </div>
               <div>
-                <p className="font-display text-4xl text-primary font-bold">50+</p>
+                <p className="font-display text-4xl text-primary font-bold">20</p>
                 <p className="font-body text-sm text-muted-foreground mt-1">
                   Partner Wineries
                 </p>
               </div>
               <div>
-                <p className="font-display text-4xl text-primary font-bold">5k+</p>
+                <p className="font-display text-4xl text-primary font-bold">Hundreds</p>
                 <p className="font-body text-sm text-muted-foreground mt-1">
-                  Happy Guests
+                  of Happy Guests
                 </p>
               </div>
             </div>

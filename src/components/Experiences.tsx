@@ -1,12 +1,10 @@
 import { Clock, Users, Wine, MapPin, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
-import vineyardTour from "@/assets/vineyard-tour.jpg";
-import wineTasting from "@/assets/wine-tasting.jpg";
-import wineDine from "@/assets/wine-dine.jpg";
-import valparaisoHills from "@/assets/valparaiso-hills.jpg";
+import { TOURS_DATA } from "@/data/tours";
 
 interface TourCardProps {
+  slug: string;
   image: string;
   title: string;
   subtitle: string;
@@ -16,6 +14,7 @@ interface TourCardProps {
 }
 
 const TourCard = ({
+  slug,
   image,
   title,
   subtitle,
@@ -24,7 +23,14 @@ const TourCard = ({
   note,
 }: TourCardProps) => {
   return (
-    <div className="group relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-500">
+    <div className="group relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-2xl hover:-translate-y-1 transition-all duration-500">
+      <a
+        href={`/tours/${slug}`}
+        onClick={() => trackEvent("cta_click", { button: `view_details_${title.toLowerCase().replace(/ /g, "_")}` })}
+        className="absolute inset-0 z-10"
+        aria-label={`View full details for ${title}`}
+      />
+
       <div className="relative overflow-hidden h-64">
         <img
           src={image}
@@ -84,7 +90,7 @@ const TourCard = ({
           </p>
         )}
 
-        <div className="flex items-center justify-between pt-6 border-t border-border">
+        <div className="relative z-20 flex items-center justify-between pt-6 border-t border-border">
           <div>
             <p className="font-display text-lg text-foreground font-semibold">
               For prices contact us
@@ -93,7 +99,10 @@ const TourCard = ({
           <Button variant="wine" size="sm" asChild>
             <a
               href="#contact"
-              onClick={() => trackEvent("cta_click", { button: `book_now_${title.toLowerCase().replace(/ /g, "_")}` })}
+              onClick={(e) => {
+                e.stopPropagation();
+                trackEvent("cta_click", { button: `book_now_${title.toLowerCase().replace(/ /g, "_")}` });
+              }}
             >Book Now</a>
           </Button>
         </div>
@@ -103,79 +112,7 @@ const TourCard = ({
 };
 
 const Experiences = () => {
-  const tours = [
-    {
-      image: vineyardTour,
-      title: "Classic Wine Tour",
-      subtitle: "Half Day Experience",
-      itinerary: [
-        { time: "9:00", activity: "Hotel pick up" },
-        { time: "10:30", activity: "Bodegas RE vineyard tour and premium tasting" },
-        { time: "12:30", activity: "Casas del Bosque vineyard tour and tasting" },
-      ],
-      includes: [
-        "Transport with driver and guide",
-        "Vineyard entrance fees",
-        "Tours and tastings at both wineries",
-      ],
-    },
-    {
-      image: wineDine,
-      title: "Wine & Dine Tour",
-      subtitle: "Full Day Experience",
-      itinerary: [
-        { time: "9:00", activity: "Hotel pick up" },
-        { time: "10:30", activity: "Bodegas RE vineyard tour and premium tasting" },
-        { time: "12:30", activity: "Casas del Bosque vineyard tour and tasting" },
-        { time: "14:00", activity: "Lunch at Casas del Bosque vineyard restaurant" },
-      ],
-      includes: [
-        "Transport with driver and guide",
-        "Vineyard entrance fees",
-        "Tours and tastings at both wineries",
-      ],
-      note: "Lunch is not included in the price.",
-    },
-    {
-      image: wineTasting,
-      title: "Wine Tours from Santiago",
-      subtitle: "Full Day Experience",
-      itinerary: [
-        { time: "8:00", activity: "Hotel pick up in Santiago" },
-        { time: "10:00", activity: "Arrival in Casablanca Valley" },
-        { time: "10:30", activity: "Bodegas RE vineyard tour and premium tasting" },
-        { time: "12:30", activity: "Casas del Bosque vineyard tour and tasting" },
-        { time: "14:00", activity: "Lunch at Casas del Bosque vineyard restaurant" },
-        { time: "16:00", activity: "Scenic drive to Valparaíso" },
-        { time: "16:30", activity: "Walking tour of Valparaíso's colorful hills" },
-        { time: "18:00", activity: "Drop off in Valparaíso or return to Santiago" },
-      ],
-      includes: [
-        "Transport with driver and guide from Santiago",
-        "Vineyard entrance fees",
-        "Tours and tastings at both wineries",
-        "Walking tour of Valparaíso",
-      ],
-      note: "Lunch is not included in the price.",
-    },
-    {
-      image: valparaisoHills,
-      title: "Valparaíso & Viña del Mar",
-      subtitle: "City Tour",
-      itinerary: [
-        { time: "10:00", activity: "Hotel pick up" },
-        { time: "10:30", activity: "Viña del Mar city tour" },
-        { time: "12:00", activity: "Valparaíso city tour" },
-        { time: "14:00", activity: "Optional boat trip in the bay of Valparaíso" },
-        { time: "15:00", activity: "Hotel drop off" },
-      ],
-      includes: [
-        "Transport with driver and guide",
-        "City tours of both Viña del Mar and Valparaíso",
-      ],
-      note: "Boat trip is optional and not included in the price.",
-    },
-  ];
+  const tours = TOURS_DATA;
 
   return (
     <section id="experiences" className="py-24 lg:py-32 bg-secondary/50">

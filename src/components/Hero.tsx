@@ -1,6 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-vineyard.jpg";
+import heroImage from "@/assets/hero-vineyard.jpg?url";
 import { trackEvent } from "@/lib/analytics";
 
 const Hero = () => {
@@ -21,8 +21,11 @@ const Hero = () => {
             Discover Chilean Wine Country
           </p>
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-wine-cream font-semibold leading-tight mb-6 animate-fade-in-up">
-            Wine Tours
+            Wine Tours{" "}
             <span className="block text-elegant text-wine-gold">Valparaíso</span>
+            <span className="block font-body text-xs md:text-sm font-normal text-wine-cream/50 mt-3">
+              from Santiago, Valparaíso & Viña del Mar
+            </span>
           </h1>
           <p className="font-body text-wine-cream/90 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-delay-1">
             Embark on an unforgettable journey through the prestigious vineyards

@@ -37,23 +37,30 @@ const Testimonials = () => {
   const testimonials = [
     {
       quote:
-        "An absolutely magical experience! Our guide was incredibly knowledgeable, and the wines were exceptional. The perfect way to explore Chilean wine country.",
-      author: "Sarah Mitchell",
-      location: "San Francisco, USA",
+        "We were very fortunate to have found Wine Tours Valparaiso. The four of us had 2 fantastic days touring. Michael was very accommodating and recommended 3 wonderful vineyards the first day, along with a delicious lunch that had an over the top dessert platter!",
+      author: "Vicki B.",
+      location: "TripAdvisor Review",
       rating: 5,
     },
     {
       quote:
-        "We've done wine tours around the world, and this was one of the best. The personal touch and access to boutique wineries made it truly special.",
-      author: "James & Emma Thompson",
-      location: "London, UK",
+        "Uplifted by Michael, he drove about an hour out of town to our first venue, which was different in that it was about organic vine growing. The wine tour guide was truly excellent, and the tasting that followed quite superb.",
+      author: "Marshall M.",
+      location: "TripAdvisor Review",
       rating: 5,
     },
     {
       quote:
-        "From the stunning vineyard views to the incredible tastings, every moment was perfect. Highly recommend the sunset tour!",
-      author: "Maria González",
-      location: "Buenos Aires, Argentina",
+        "Had a superb city tour through Valparaiso with Michael along with a wine tour in Casablanca. His knowledge of the wine region and wines is first rate.",
+      author: "Debbie M.",
+      location: "TripAdvisor Review",
+      rating: 5,
+    },
+    {
+      quote:
+        "Michael's selection of wineries and restaurants was diverse and fantastic. We've had tasting/touring experiences with many wine regions in the world and these tastings and the tours of the region were very memorable... We would highly recommend Michael and Wine Tours Valparaiso.",
+      author: "Anne S.",
+      location: "TripAdvisor Review",
       rating: 5,
     },
   ];
@@ -73,7 +80,7 @@ const Testimonials = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 gap-8">
           {testimonials.map((testimonial, index) => (
             <TestimonialCard key={index} {...testimonial} />
           ))}
@@ -92,17 +99,16 @@ const Testimonials = () => {
               ))}
             </div>
             <span className="font-body text-muted-foreground">
-              4.9/5 on TripAdvisor
+              4.6/5 on TripAdvisor
             </span>
           </div>
           <div className="w-px h-6 bg-border hidden md:block" />
           <p className="font-body text-muted-foreground">
-            <span className="font-semibold text-foreground">500+</span> 5-star
-            reviews
+            <span className="font-semibold text-foreground">74</span> reviews
           </p>
           <div className="w-px h-6 bg-border hidden md:block" />
           <p className="font-body text-muted-foreground">
-            Certificate of Excellence 2024
+            #5 of 37 Food & Drink in Valparaíso
           </p>
         </div>
       </div>

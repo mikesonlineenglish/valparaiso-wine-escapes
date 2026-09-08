@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.jpg?url";
 import { trackEvent } from "@/lib/analytics";
 
 const Header = () => {
@@ -16,9 +16,9 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { href: "#about", label: "About" },
-    { href: "#experiences", label: "Experiences" },
-    { href: "#testimonials", label: "Testimonials" },
+    { href: "/#about", label: "About" },
+    { href: "/#experiences", label: "Experiences" },
+    { href: "/#testimonials", label: "Testimonials" },
     { href: "#price-calculator", label: "Get a Quote" },
     { href: "#contact", label: "Contact" },
   ];
@@ -32,7 +32,7 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-3">
+        <a href="/" className="flex items-center gap-3">
           <img
             src={logo}
             alt="Wine Tours Valparaiso"

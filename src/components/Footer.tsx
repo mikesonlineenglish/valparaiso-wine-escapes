@@ -1,5 +1,13 @@
-import logo from "@/assets/logo.jpg";
-import tripadvisor from "@/assets/tripadvisor.png";
+import logo from "@/assets/logo.jpg?url";
+import tripadvisor from "@/assets/tripadvisor.png?url";
+import { TOURS_DATA } from "@/data/tours";
+
+const QUICK_LINKS = [
+  { label: "About", href: "/#about" },
+  { label: "Experiences", href: "/#experiences" },
+  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Contact", href: "#contact" },
+];
 
 const Footer = () => {
   return (
@@ -27,18 +35,16 @@ const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-2">
-              {["About", "Experiences", "Testimonials", "Contact"].map(
-                (link) => (
-                  <li key={link}>
-                    <a
-                      href={`#${link.toLowerCase()}`}
-                      className="font-body text-wine-cream/70 hover:text-wine-gold transition-colors text-sm"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                )
-              )}
+              {QUICK_LINKS.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="font-body text-wine-cream/70 hover:text-wine-gold transition-colors text-sm"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -48,18 +54,13 @@ const Footer = () => {
               Our Tours
             </h4>
             <ul className="space-y-2">
-              {[
-                "Casablanca Valley Tour",
-                "Cellar & Barrel Tasting",
-                "Sunset Wine & Dine",
-                "Private Tours",
-              ].map((tour) => (
-                <li key={tour}>
+              {TOURS_DATA.map((tour) => (
+                <li key={tour.slug}>
                   <a
-                    href="#experiences"
+                    href={`/tours/${tour.slug}`}
                     className="font-body text-wine-cream/70 hover:text-wine-gold transition-colors text-sm"
                   >
-                    {tour}
+                    {tour.title}
                   </a>
                 </li>
               ))}

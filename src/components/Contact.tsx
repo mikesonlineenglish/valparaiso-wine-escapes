@@ -87,7 +87,7 @@ const Contact = () => {
                   <p className="font-body text-sm text-primary-foreground/60 mb-1">
                     Located In
                   </p>
-                  <p className="font-body">Valparaíso, Chile</p>
+                  <p className="font-body">Cerro Alegre, Valparaíso, Chile</p>
                 </div>
               </div>
 
@@ -285,6 +285,20 @@ const Contact = () => {
 
                   <p className="font-body text-xs text-muted-foreground text-center">
                     We typically respond within 24 hours
+                  </p>
+
+                  <p className="font-body text-xs text-muted-foreground text-center">
+                    Prefer to chat?{" "}
+                    <a
+                      href="https://wa.me/+56984283502"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackEvent("whatsapp_click", { button: "whatsapp_contact_form" })}
+                      className="inline-flex items-center gap-1 text-primary hover:underline underline-offset-2"
+                    >
+                      <MessageCircle size={14} />
+                      Contact us on WhatsApp
+                    </a>
                   </p>
                 </form>
               </>
