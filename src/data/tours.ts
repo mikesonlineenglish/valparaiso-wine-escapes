@@ -46,7 +46,7 @@ export const TOURS_DATA: TourData[] = [
     title: "Classic Wine Tour",
     subtitle: "Half Day Experience",
     metaDescription:
-      "Half-day Casablanca Valley wine tour visiting Bodegas RE and Casas del Bosque, with transport, entrance fees, and tastings included. Prices from CLP per person.",
+      "Half-day Casablanca Valley wine tour visiting Bodegas RE and Casas del Bosque, with transport, entrance fees, and tastings included. Prices from {{price}} per person.",
     touristType: "Wine enthusiasts",
     itinerary: [
       { time: "9:00", activity: "Hotel pick up" },
@@ -67,7 +67,7 @@ export const TOURS_DATA: TourData[] = [
     title: "Wine & Dine Tour",
     subtitle: "Full Day Experience",
     metaDescription:
-      "Full-day Casablanca Valley wine and dine tour with Bodegas RE, Casas del Bosque, and a vineyard restaurant lunch stop. Prices from CLP per person.",
+      "Full-day Casablanca Valley wine and dine tour with Bodegas RE, Casas del Bosque, and a vineyard restaurant lunch stop. Prices from {{price}} per person.",
     touristType: "Wine enthusiasts",
     itinerary: [
       { time: "9:00", activity: "Hotel pick up" },
@@ -90,7 +90,7 @@ export const TOURS_DATA: TourData[] = [
     title: "Wine Tours from Santiago",
     subtitle: "Full Day Experience",
     metaDescription:
-      "Full-day wine tour from Santiago to Casablanca Valley and Valparaíso, with winery visits, tastings, and a walking tour of Valparaíso's colorful hills. Prices from CLP per person.",
+      "Full-day wine tour from Santiago to Casablanca Valley and Valparaíso, with winery visits, tastings, and a walking tour of Valparaíso's colorful hills. Prices from {{price}} per person.",
     touristType: "Wine enthusiasts",
     itinerary: [
       { time: "8:00", activity: "Hotel pick up in Santiago" },
@@ -118,7 +118,7 @@ export const TOURS_DATA: TourData[] = [
     title: "Valparaíso & Viña del Mar",
     subtitle: "City Tour",
     metaDescription:
-      "Half-day city tour of Valparaíso and Viña del Mar, with an optional boat trip in the bay of Valparaíso. Prices from CLP per person.",
+      "Half-day city tour of Valparaíso and Viña del Mar, with an optional boat trip in the bay of Valparaíso. Prices from {{price}} per person.",
     touristType: "Cultural travelers",
     itinerary: [
       { time: "10:00", activity: "Hotel pick up" },

@@ -72,8 +72,6 @@ export const PRICES: Record<string, Record<Tier, Record<string, number>>> = {
   },
 };
 
-export const formatCLP = (thousands: number) => `$${(thousands * 1000).toLocaleString("es-CL")}`;
-
 export const getPrice = (tourId: string, guests: number, pickup: string, dropoff: string): number | null => {
   const tier = getTier(guests);
   const pk = LOC_KEY[pickup];

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Calculator, Users, MapPin, ChevronDown, Wine, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LOCATION_OPTIONS, TOURS, getPrice, formatCLP } from "@/lib/pricing";
+import { LOCATION_OPTIONS, TOURS, getPrice } from "@/lib/pricing";
+import { formatPrice } from "@/lib/currency";
 
 interface SelectFieldProps {
   label: string;
@@ -139,7 +140,7 @@ const PriceCalculator = ({ initialTourId = "", embedded = false }: PriceCalculat
                         <div className="text-center sm:text-left sm:border-r border-border pr-0 sm:pr-6">
                           <p className="font-body text-xs text-muted-foreground uppercase tracking-widest mb-1">Per Person</p>
                           <p className="font-display text-3xl font-semibold text-primary">
-                            {pricePerPerson !== null ? formatCLP(pricePerPerson) : "—"}
+                            {pricePerPerson !== null ? formatPrice(pricePerPerson * 1000) : "—"}
                           </p>
                           <p className="font-body text-xs text-muted-foreground mt-1">CLP per person</p>
                         </div>
@@ -147,7 +148,7 @@ const PriceCalculator = ({ initialTourId = "", embedded = false }: PriceCalculat
                         <div className="text-center sm:text-left">
                           <p className="font-body text-xs text-muted-foreground uppercase tracking-widest mb-1">Total for {guests} {guests === 1 ? "guest" : "guests"}</p>
                           <p className="font-display text-3xl font-semibold text-primary">
-                            {totalPrice !== null ? formatCLP(totalPrice) : "—"}
+                            {totalPrice !== null ? formatPrice(totalPrice * 1000) : "—"}
                           </p>
                           <p className="font-body text-xs text-muted-foreground mt-1">CLP total</p>
                         </div>

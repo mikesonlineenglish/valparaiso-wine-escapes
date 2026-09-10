@@ -5,7 +5,8 @@ import PriceCalculator from "../../components/PriceCalculator";
 import Contact from "../../components/Contact";
 import Footer from "../../components/Footer";
 import { TOURS_DATA, type TourData } from "../../data/tours";
-import { getMinPrice, formatCLP } from "../../lib/pricing";
+import { getMinPrice } from "../../lib/pricing";
+import { formatPrice } from "../../lib/currency";
 import { normalizeHref } from "../../utils/url";
 
 export function getStaticPaths() {
@@ -21,14 +22,15 @@ const otherTours = TOURS_DATA.filter((t) => t.slug !== tour.slug);
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 const minPriceThousands = getMinPrice(tour.calculatorId);
-const startingPrice = minPriceThousands !== null ? formatCLP(minPriceThousands) : null;
 const minPriceCLP = minPriceThousands !== null ? minPriceThousands * 1000 : undefined;
+const startingPrice = minPriceCLP !== undefined ? formatPrice(minPriceCLP) : null;
+const description = tour.metaDescription.replace("{{price}}", startingPrice ?? "");
 
 const touristTrip = {
   "@context": "https://schema.org",
   "@type": "TouristTrip",
   name: tour.title,
-  description: tour.metaDescription,
+  description,
   touristType: tour.touristType,
   itinerary: {
     "@type": "ItemList",
@@ -54,7 +56,7 @@ const touristTrip = {
 
 <Layout
   title={`${tour.title} | Wine Tours Valparaíso`}
-  description={tour.metaDescription}
+  description={description}
   ogImage={`https://winetoursvalparaiso.com${tour.image}`}
 >
   <Fragment slot="head">
