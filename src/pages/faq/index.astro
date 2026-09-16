@@ -1,0 +1,115 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header";
+import Contact from "../../components/Contact";
+import Footer from "../../components/Footer";
+import faqData from "../../../content/faq.json";
+
+interface FaqItem {
+  q: string;
+  a: string;
+  /** Optional rendered form of `a` with inline links — its tag-stripped text must be
+   * identical to `a`, since `a` is what goes into the FAQPage JSON-LD and the seo-check
+   * verifies that text against the rendered page verbatim. */
+  aHtml?: string;
+}
+
+interface FaqSection {
+  id: string;
+  heading: string;
+  items: FaqItem[];
+}
+
+const { title, sections } = faqData as { title: string; sections: FaqSection[] };
+
+// One FAQPage block flattening every question across all sections — sections are
+// presentation only and have no schema.org equivalent. Built from the same data that
+// renders the HTML below, so the schema text can never drift from what's on the page.
+const faqPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  inLanguage: "en",
+  mainEntity: sections.flatMap((section) =>
+    section.items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    }))
+  ),
+};
+
+const description =
+  "Answers to common questions about Casablanca Valley wine tours — pricing, pickup from Santiago, Valparaíso and the cruise ports, and what's included.";
+---
+
+<Layout
+  title="Wine Tour FAQs — Casablanca Valley | Wine Tours Valparaíso"
+  description={description}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqPageSchema)} />
+  </Fragment>
+
+  <div class="min-h-screen">
+    <Header client:load alwaysScrolled />
+
+    <section class="pt-40 pb-20 lg:pt-48 lg:pb-28 bg-background">
+      <div class="container mx-auto px-6 max-w-3xl">
+        <h1 class="font-display text-4xl md:text-5xl font-semibold text-foreground mb-8">
+          {title}
+        </h1>
+
+        <nav aria-label="FAQ sections" class="mb-14 rounded-lg border border-border bg-secondary/30 p-6">
+          <p class="font-body text-sm uppercase tracking-wide text-muted-foreground mb-3">
+            Jump to
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-2">
+            {sections.map((section) => (
+              <li>
+                <a href={`#${section.id}`} class="font-body text-primary hover:underline">
+                  {section.heading}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {sections.map((section) => (
+          <section id={section.id} class="mb-14 scroll-mt-28">
+            <h2 class="font-display text-2xl font-semibold text-foreground uppercase tracking-wide mb-6">
+              {section.heading}
+            </h2>
+            <div class="space-y-8">
+              {section.items.map((item) => (
+                <div>
+                  <h3 class="font-display text-lg font-semibold text-foreground mb-2">
+                    {item.q}
+                  </h3>
+                  {item.aHtml ? (
+                    <p class="font-body text-muted-foreground leading-relaxed [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-primary/80" set:html={item.aHtml} />
+                  ) : (
+                    <p class="font-body text-muted-foreground leading-relaxed">
+                      {item.a}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+
+        <div class="rounded-lg border border-border bg-secondary/30 p-6 [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-primary/80">
+          <p class="font-body text-muted-foreground leading-relaxed">
+            Didn't find your answer? Ask us directly by <a href="https://wa.me/+56984283502">WhatsApp</a>, <a href="mailto:info@winetoursvalparaiso.com">email</a> or the <a href="#contact">contact form</a> — we usually reply within 24 hours. If it's something this page should have covered, tell us and we'll add it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <Contact client:load />
+    <Footer />
+  </div>
+</Layout>

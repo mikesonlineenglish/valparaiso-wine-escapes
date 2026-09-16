@@ -1,0 +1,125 @@
+{
+  "title": "Wine Tour FAQs: Casablanca Valley, Valparaíso & Santiago",
+  "sections": [
+    {
+      "id": "tours",
+      "heading": "Tours & itineraries",
+      "items": [
+        {
+          "q": "What regions do you cover?",
+          "a": "We offer tours in the Maipo, Casablanca, and Colchagua valleys, plus city tours in Valparaíso and Viña del Mar."
+        },
+        {
+          "q": "Do you offer private tours?",
+          "a": "Yes, we specialize in small, personalized tours tailored to your interests."
+        },
+        {
+          "q": "Can you arrange group tours?",
+          "a": "Absolutely, we can accommodate larger groups with advance booking."
+        },
+        {
+          "q": "What is included in a wine tour?",
+          "a": "Transport, guided visits to wineries, tastings, and cultural insights. Lunch on arrangement."
+        },
+        {
+          "q": "Are meals included?",
+          "a": "Some tours include lunch at a winery or local restaurant; details vary by package."
+        },
+        {
+          "q": "Do you customize itineraries?",
+          "a": "Yes, we tailor tours to your preferences, whether wine-focused or cultural."
+        },
+        {
+          "q": "Do you offer city tours?",
+          "a": "Yes, we provide tours around Valparaíso and Viña del Mar, highlighting history and culture."
+        },
+        {
+          "q": "Do you offer multi-day packages?",
+          "a": "Yes, we can arrange extended itineraries across multiple valleys."
+        }
+      ]
+    },
+    {
+      "id": "booking",
+      "heading": "Prices & booking",
+      "items": [
+        {
+          "q": "How do I book a tour?",
+          "a": "Through our website, email, or by contacting us directly.",
+          "aHtml": "Through our <a href=\"#contact\">website</a>, <a href=\"mailto:info@winetoursvalparaiso.com\">email</a>, or by contacting us <a href=\"https://wa.me/+56984283502\">directly</a>."
+        },
+        {
+          "q": "Do I need to book in advance? How far ahead?",
+          "a": "At least 24 hours."
+        },
+        {
+          "q": "What payment methods are accepted?",
+          "a": "We accept major credit cards, PayPal, and cash in Chilean pesos."
+        },
+        {
+          "q": "What is your cancellation policy?",
+          "a": "Full refunds are available with 48 hours' notice; partial refunds after that."
+        }
+      ]
+    },
+    {
+      "id": "pickup",
+      "heading": "Getting there & pickup",
+      "items": [
+        {
+          "q": "Do you pick up from Santiago?",
+          "a": "Yes, tours can start from Santiago, Valparaíso, or Viña del Mar."
+        },
+        {
+          "q": "Do you offer shore excursions from the Valparaíso and San Antonio cruise ports?",
+          "a": "Yes — we collect and drop off at both the Valparaíso cruise terminal and the port of San Antonio. Pricing for Valparaíso pickup is shown in our price calculator; for San Antonio, contact us and we'll quote you directly. Every tour page lists its full duration, so you can match a half-day or full-day tour to the time your ship is in port."
+        },
+        {
+          "q": "Is transport included?",
+          "a": "Comfortable private transport is included in all tours."
+        }
+      ]
+    },
+    {
+      "id": "practical",
+      "heading": "Practical",
+      "items": [
+        {
+          "q": "What languages are tours offered in?",
+          "a": "Tours are conducted in English and Spanish."
+        },
+        {
+          "q": "Can children join wine tours?",
+          "a": "Children are welcome, though tastings are reserved for adults."
+        },
+        {
+          "q": "How can I contact you?",
+          "a": "Email: info@winetoursvalparaiso.com or via our website contact form. You can also WhatsApp us.",
+          "aHtml": "Email: <a href=\"mailto:info@winetoursvalparaiso.com\">info@winetoursvalparaiso.com</a> or via our website <a href=\"#contact\">contact form</a>. You can also <a href=\"https://wa.me/+56984283502\">WhatsApp us</a>."
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "heading": "About us",
+      "items": [
+        {
+          "q": "How long has Wine Tours Valparaíso been operating?",
+          "a": "Since 2007, with nearly two decades of experience guiding visitors."
+        },
+        {
+          "q": "Who is the owner?",
+          "a": "British expat Michael Ayandokun, who studied Latin American culture and has lived in Chile for over 20 years."
+        },
+        {
+          "q": "Are your guides certified?",
+          "a": "Yes, Michael has a Chilean School of Sommeliers certificate."
+        },
+        {
+          "q": "What makes your tours unique?",
+          "a": "Personal attention, cultural depth, and authentic experiences beyond mass tourism."
+        }
+      ]
+    }
+  ]
+}

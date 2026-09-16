@@ -4,22 +4,31 @@ import logo from "@/assets/logo.jpg?url";
 import { trackEvent } from "@/lib/analytics";
 import { normalizeHref } from "@/utils/url";
 
-const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+interface HeaderProps {
+  /** Keeps the header in its "scrolled" (solid background, compact) look at all
+   * scroll positions, for pages without a full-bleed hero behind the header. */
+  alwaysScrolled?: boolean;
+}
+
+const Header = ({ alwaysScrolled = false }: HeaderProps) => {
+  const [isScrolled, setIsScrolled] = useState(alwaysScrolled);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    if (alwaysScrolled) return;
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [alwaysScrolled]);
 
   const navLinks = [
     { href: "/#about", label: "About" },
     { href: "/#experiences", label: "Experiences" },
     { href: "/#testimonials", label: "Testimonials" },
+    { href: "/faq", label: "FAQ" },
     { href: "#price-calculator", label: "Get a Quote" },
     { href: "#contact", label: "Contact" },
   ];

@@ -15,6 +15,9 @@
 //     amount doesn't).
 //  4. Ambiguous-price check: no visible price may render as a bare "$" + digits (reads as
 //     USD to an English-speaking visitor) — prices must show the currency code.
+//  5. FAQPage schema-to-HTML check: every question/answer string in a page's FAQPage
+//     JSON-LD must appear verbatim in that same page's rendered (visible) HTML — catches
+//     schema and copy drifting apart when one is edited without the other.
 
 import { readdirSync, statSync, readFileSync, existsSync } from "node:fs";
 import { join, extname } from "node:path";
@@ -140,16 +143,74 @@ function extractDescriptions(html) {
   return descriptions;
 }
 
+const HTML_ENTITIES = {
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&quot;": '"',
+  "&#39;": "'",
+  "&apos;": "'",
+  "&nbsp;": " ",
+};
+
+/** Decodes the handful of entities Astro/JSX actually emit for text nodes, so visible
+ * text can be compared against raw (un-encoded) strings like JSON-LD content. */
+function decodeHtmlEntities(text) {
+  return text
+    .replace(/&#39;|&amp;|&lt;|&gt;|&quot;|&apos;|&nbsp;/g, (entity) => HTML_ENTITIES[entity])
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)));
+}
+
 /** Visible body text only — strips scripts and tags, matching how a reader (or a search
  * snippet) would actually see the page, so this doesn't false-positive on markup/JSON. */
 function extractVisibleText(html) {
   const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/);
   const body = bodyMatch ? bodyMatch[1] : html;
-  return body
-    .replace(/<script[\s\S]*?<\/script>/g, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  return decodeHtmlEntities(
+    body
+      .replace(/<script[\s\S]*?<\/script>/g, " ")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      // An inline tag (e.g. a closing </a>) right before punctuation leaves a stray
+      // space once tags are stripped, even though nothing renders between them visually.
+      .replace(/\s+([.,;:!?])/g, "$1")
+      .trim()
+  );
+}
+
+/** Recursively collects every FAQPage question name + accepted-answer text found in a
+ * JSON-LD object, anywhere it's nested. */
+function collectFaqPageStrings(node, out) {
+  if (Array.isArray(node)) {
+    for (const item of node) collectFaqPageStrings(item, out);
+    return;
+  }
+  if (node && typeof node === "object") {
+    if (node["@type"] === "FAQPage" && Array.isArray(node.mainEntity)) {
+      for (const question of node.mainEntity) {
+        if (typeof question?.name === "string") out.push(question.name);
+        const answerText = question?.acceptedAnswer?.text;
+        if (typeof answerText === "string") out.push(answerText);
+      }
+    }
+    for (const value of Object.values(node)) {
+      collectFaqPageStrings(value, out);
+    }
+  }
+}
+
+function extractFaqPageStrings(html) {
+  const strings = [];
+  const scriptRe = /<script type="application\/ld\+json">(.*?)<\/script>/gs;
+  let m;
+  while ((m = scriptRe.exec(html))) {
+    try {
+      collectFaqPageStrings(JSON.parse(m[1]), strings);
+    } catch {
+      // not valid JSON — not our concern here, the build would have failed elsewhere
+    }
+  }
+  return strings;
 }
 
 const BARE_DOLLAR_RE = /\$\d/g;
@@ -173,6 +234,7 @@ function main() {
   const brokenLinks = [];
   const missingAmounts = [];
   const bareDollarPrices = [];
+  const faqMismatches = [];
 
   for (const file of htmlFiles) {
     const html = readFileSync(file, "utf8");
@@ -199,8 +261,16 @@ function main() {
       }
     }
 
-    for (const snippet of findBareDollarPrices(extractVisibleText(html))) {
+    const visibleText = extractVisibleText(html);
+
+    for (const snippet of findBareDollarPrices(visibleText)) {
       bareDollarPrices.push({ file: relFile, snippet });
+    }
+
+    for (const text of extractFaqPageStrings(html)) {
+      if (!visibleText.includes(text)) {
+        faqMismatches.push({ file: relFile, snippet: text.length > 60 ? `${text.slice(0, 60)}…` : text });
+      }
     }
   }
 
@@ -250,11 +320,23 @@ function main() {
     console.log("");
   }
 
+  console.log("--- FAQPage schema-to-HTML check ---");
+  if (faqMismatches.length === 0) {
+    console.log("OK — every FAQPage question/answer string appears verbatim in its page's HTML.\n");
+  } else {
+    console.log(`FAIL — ${faqMismatches.length} FAQPage string(s) don't appear verbatim in the rendered HTML:\n`);
+    for (const { file, snippet } of faqMismatches) {
+      console.log(`  ${file}: "${snippet}"`);
+    }
+    console.log("");
+  }
+
   if (
     slashViolations.length > 0 ||
     brokenLinks.length > 0 ||
     missingAmounts.length > 0 ||
-    bareDollarPrices.length > 0
+    bareDollarPrices.length > 0 ||
+    faqMismatches.length > 0
   ) {
     process.exit(1);
   }
