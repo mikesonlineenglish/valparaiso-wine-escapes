@@ -5,7 +5,8 @@ import { normalizeHref } from "@/utils/url";
 
 const QUICK_LINKS = [
   { label: "About", href: "/#about" },
-  { label: "Experiences", href: "/#experiences" },
+  { label: "Tours", href: "/tours" },
+  { label: "Wineries", href: "/wineries" },
   { label: "Testimonials", href: "/#testimonials" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "#contact" },

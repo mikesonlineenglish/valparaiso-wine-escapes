@@ -29,6 +29,7 @@ const description = tour.metaDescription.replace("{{price}}", startingPrice ?? "
 const touristTrip = {
   "@context": "https://schema.org",
   "@type": "TouristTrip",
+  "@id": `${canonicalUrl}#tour`,
   name: tour.title,
   description,
   touristType: tour.touristType,
@@ -52,6 +53,16 @@ const touristTrip = {
     name: "Wine Tours Valparaíso",
   },
 };
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: new URL("/", Astro.site).href },
+    { "@type": "ListItem", position: 2, name: "Tours", item: new URL("/tours/", Astro.site).href },
+    { "@type": "ListItem", position: 3, name: tour.title, item: canonicalUrl },
+  ],
+};
 ---
 
 <Layout
@@ -61,6 +72,7 @@ const touristTrip = {
 >
   <Fragment slot="head">
     <script type="application/ld+json" is:inline set:html={JSON.stringify(touristTrip)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
   </Fragment>
 
   <div class="min-h-screen">
@@ -78,7 +90,7 @@ const touristTrip = {
         <nav class="mb-6 text-sm font-body text-wine-cream/70" aria-label="Breadcrumb">
           <a href="/" class="hover:text-wine-cream transition-colors">Home</a>
           <span class="mx-2">/</span>
-          <a href="/#experiences" class="hover:text-wine-cream transition-colors">Tours</a>
+          <a href="/tours/" class="hover:text-wine-cream transition-colors">Tours</a>
           <span class="mx-2">/</span>
           <span class="text-wine-cream">{tour.title}</span>
         </nav>
@@ -121,9 +133,16 @@ const touristTrip = {
                   <span class="font-body text-primary font-semibold text-sm min-w-[60px]">
                     {item.time}
                   </span>
-                  <span class="font-body text-muted-foreground text-sm">
-                    {item.activity}
-                  </span>
+                  {item.activityHtml ? (
+                    <span
+                      class="font-body text-muted-foreground text-sm [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-primary/80"
+                      set:html={item.activityHtml}
+                    />
+                  ) : (
+                    <span class="font-body text-muted-foreground text-sm">
+                      {item.activity}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>

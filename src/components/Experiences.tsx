@@ -4,7 +4,7 @@ import { trackEvent } from "@/lib/analytics";
 import { TOURS_DATA } from "@/data/tours";
 import { normalizeHref } from "@/utils/url";
 
-interface TourCardProps {
+export interface TourCardProps {
   slug: string;
   image: string;
   title: string;
@@ -14,7 +14,7 @@ interface TourCardProps {
   note?: string;
 }
 
-const TourCard = ({
+export const TourCard = ({
   slug,
   image,
   title,
@@ -124,8 +124,10 @@ const Experiences = () => {
             Our Tours
           </p>
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground font-semibold leading-tight mb-6">
-            Unforgettable
-            <span className="text-elegant text-primary block">Wine Journeys</span>
+            <a href={normalizeHref("/tours")} className="hover:opacity-80 transition-opacity">
+              Unforgettable
+              <span className="text-elegant text-primary block">Wine Journeys</span>
+            </a>
           </h2>
           <p className="text-muted-foreground leading-relaxed">
             Explore the prestigious Casablanca Valley with our expertly curated

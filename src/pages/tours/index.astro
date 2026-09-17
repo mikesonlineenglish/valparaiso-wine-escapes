@@ -1,0 +1,199 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header";
+import ToursGrid from "../../components/ToursGrid";
+import Contact from "../../components/Contact";
+import Footer from "../../components/Footer";
+import { TOURS_DATA } from "../../data/tours";
+import { getMinPrice } from "../../lib/pricing";
+import { formatPrice } from "../../lib/currency";
+import toursHero from "../../assets/tours-hero.jpg?url";
+
+const description =
+  "Four fixed-itinerary wine tours from Valparaíso, Viña del Mar and Santiago, with published prices and hotel pickup — plus custom tours built around you.";
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const homeUrl = new URL("/", Astro.site).href;
+
+// Reference-level TouristTrip per tour — the full itinerary lives on the tour's own page
+// (src/pages/tours/[slug].astro), which carries the matching "@id" so both entries
+// describe one entity rather than two near-duplicate TouristTrips.
+const tourItems = TOURS_DATA.map((tour) => {
+  const url = new URL(`/tours/${tour.slug}/`, Astro.site).href;
+  const minPriceThousands = getMinPrice(tour.calculatorId);
+  const minPriceCLP = minPriceThousands !== null ? minPriceThousands * 1000 : undefined;
+  const price = minPriceCLP !== undefined ? formatPrice(minPriceCLP) : null;
+  const tourDescription = tour.metaDescription.replace("{{price}}", price ?? "");
+
+  return {
+    url,
+    minPriceCLP,
+    touristTrip: {
+      "@type": "TouristTrip",
+      "@id": `${url}#tour`,
+      name: tour.title,
+      description: tourDescription,
+      url,
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "CLP",
+        price: minPriceCLP,
+        availability: "https://schema.org/InStock",
+        url,
+      },
+    },
+  };
+});
+
+// The cards render in TOURS_DATA's declared order (not sorted by price), so the ItemList
+// is unordered rather than claiming a price ranking that isn't actually there.
+const collectionPage = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Wine Tours from Valparaíso, Viña del Mar & Santiago",
+  description,
+  url: pageUrl,
+  inLanguage: "en",
+  publisher: {
+    "@type": "Organization",
+    name: "Wine Tours Valparaíso",
+    url: homeUrl,
+  },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: tourItems.length,
+    itemListOrder: "https://schema.org/ItemListUnordered",
+    itemListElement: tourItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: item.touristTrip,
+    })),
+  },
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+    { "@type": "ListItem", position: 2, name: "Tours", item: pageUrl },
+  ],
+};
+---
+
+<Layout
+  title="Casablanca Valley Wine Tours & Prices | Wine Tours Valparaíso"
+  description={description}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(collectionPage)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  </Fragment>
+
+  <div class="min-h-screen">
+    <Header client:load />
+
+    <section class="relative pt-40 pb-20 lg:pt-48 lg:pb-28 overflow-hidden">
+      <div
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={`background-image: url(${toursHero})`}
+      >
+        <div class="absolute inset-0 gradient-hero" />
+      </div>
+
+      <div class="relative z-10 container mx-auto px-6">
+        <nav class="mb-6 text-sm font-body text-wine-cream/70" aria-label="Breadcrumb">
+          <a href="/" class="hover:text-wine-cream transition-colors">Home</a>
+          <span class="mx-2">/</span>
+          <span class="text-wine-cream">Tours</span>
+        </nav>
+
+        <p class="font-body text-wine-cream/80 tracking-[0.3em] uppercase text-sm mb-4">
+          Our Tours
+        </p>
+        <h1 class="font-display text-4xl md:text-6xl lg:text-7xl text-wine-cream font-semibold leading-tight max-w-3xl">
+          Wine Tours from Valparaíso, Viña del Mar & Santiago
+        </h1>
+      </div>
+    </section>
+
+    <section class="py-16 lg:py-20 bg-background">
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto mb-16 lg:mb-20 space-y-4 text-muted-foreground leading-relaxed font-body text-center">
+          <p>
+            These are the four tours we run most often — fixed itineraries, published
+            prices, hotel pickup included. Pick the one that fits the time you have.
+          </p>
+          <p>
+            They're a starting point, not a menu. Every tour is private, so any of them
+            can be rebuilt around you.
+          </p>
+        </div>
+
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10 text-center">
+          The four tours we run most often
+        </h2>
+
+        <ToursGrid client:load />
+      </div>
+    </section>
+
+    <section class="py-16 lg:py-20 bg-secondary/50">
+      <div class="container mx-auto px-6 max-w-3xl">
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-foreground mb-6">
+          Want something different?
+        </h2>
+        <div class="space-y-4 text-muted-foreground leading-relaxed font-body">
+          <p>
+            We've been guiding in Chilean wine country since 2007, and a good share of
+            what we run is built to order. Some of what we can put together:
+          </p>
+          <ul class="space-y-3 list-disc pl-5 [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-primary/80">
+            <li>
+              Other valleys — Maipo and Aconcagua from Santiago, Colchagua for a day
+              among the big reds, or Casablanca in more depth than the standard route
+            </li>
+            <li>
+              Different wineries — a dozen estates in Casablanca alone, from boutique
+              names like Kingston and Loma Larga to organic Emiliana. Our
+              {" "}<a href="/wineries/">wineries guide</a> covers who's worth your time
+            </li>
+            <li>
+              Transfer tours — travelling between Santiago and Valparaíso anyway? We'll
+              run a valley itinerary on the way and drop you at the other end, instead
+              of a round trip
+            </li>
+            <li>
+              Food and wine — vineyard lunches with proper pairings, a cooking class
+              where you shop for the ingredients and cook them yourself, or a full
+              Chilean asado out in the countryside: chorizo, prietas, ribs and two cuts
+              of beef
+            </li>
+            <li>
+              Sparkling — the Casablanca route with a bottle of each winery's espumante
+              along the way
+            </li>
+            <li>
+              Something for an occasion — a helicopter over the valley to lunch at
+              Matetic, for an anniversary or a last day in Chile
+            </li>
+          </ul>
+          <p>
+            Tell us how long you have, where you're staying and what you like drinking,
+            and we'll send back an itinerary and a price. Custom tours need a few days'
+            notice; cooking classes and asados need at least three.
+          </p>
+        </div>
+        <a
+          href="#contact"
+          class="inline-block mt-8 font-body text-sm tracking-wide uppercase px-5 py-3 rounded bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300"
+        >
+          Get in Touch
+        </a>
+      </div>
+    </section>
+
+    <Contact client:load />
+    <Footer />
+  </div>
+</Layout>

@@ -15,7 +15,14 @@ export interface TourData {
   metaDescription: string;
   /** schema.org TouristTrip touristType. */
   touristType: string;
-  itinerary: { time: string; activity: string }[];
+  itinerary: {
+    time: string;
+    activity: string;
+    /** Optional rendered form of `activity` with inline links (e.g. to /wineries) — its
+     * tag-stripped text must be identical to `activity`, since `activity` is what goes
+     * into the TouristTrip JSON-LD. */
+    activityHtml?: string;
+  }[];
   includes: string[];
   note?: string;
   /** Optional background section shown on the tour's own page — heading + one or more paragraphs. */
@@ -35,8 +42,24 @@ const VALPARAISO_CITY_INFO = [
   "All of these areas have a wealth of interesting art shops and great nightlife, with good-quality restaurants and bars.",
 ];
 
-const CASAS_DEL_BOSQUE_TASTING =
-  "Casas del Bosque vineyard tour and tasting of their Sauvignon Blanc, Pinot Noir, Syrah, and Carmenère Gran Reserva";
+const WINERY_LINK_CLASS =
+  "text-primary underline underline-offset-2 hover:text-primary/80";
+
+const BODEGAS_RE_TOUR = {
+  activity: "Bodegas RE vineyard tour and premium tasting",
+  activityHtml: `<a href="/wineries/#bodegas-re" class="${WINERY_LINK_CLASS}">Bodegas RE</a> vineyard tour and premium tasting`,
+};
+
+const CASAS_DEL_BOSQUE_TASTING = {
+  activity:
+    "Casas del Bosque vineyard tour and tasting of their Sauvignon Blanc, Pinot Noir, Syrah, and Carmenère Gran Reserva",
+  activityHtml: `<a href="/wineries/#casas-del-bosque" class="${WINERY_LINK_CLASS}">Casas del Bosque</a> vineyard tour and tasting of their Sauvignon Blanc, Pinot Noir, Syrah, and Carmenère Gran Reserva`,
+};
+
+const CASAS_DEL_BOSQUE_LUNCH = {
+  activity: "Lunch at Casas del Bosque vineyard restaurant",
+  activityHtml: `Lunch at <a href="/wineries/#casas-del-bosque" class="${WINERY_LINK_CLASS}">Casas del Bosque</a> vineyard restaurant`,
+};
 
 export const TOURS_DATA: TourData[] = [
   {
@@ -46,12 +69,12 @@ export const TOURS_DATA: TourData[] = [
     title: "Classic Wine Tour",
     subtitle: "Half Day Experience",
     metaDescription:
-      "Half-day Casablanca Valley wine tour visiting Bodegas RE and Casas del Bosque, with transport, entrance fees, and tastings included. Prices from {{price}} per person.",
+      "Half-day Casablanca Valley wine tour visiting Bodegas RE and Casas del Bosque. Transport, entrance fees and tastings included. From {{price}}.",
     touristType: "Wine enthusiasts",
     itinerary: [
       { time: "9:00", activity: "Hotel pick up" },
-      { time: "10:30", activity: "Bodegas RE vineyard tour and premium tasting" },
-      { time: "12:30", activity: CASAS_DEL_BOSQUE_TASTING },
+      { time: "10:30", ...BODEGAS_RE_TOUR },
+      { time: "12:30", ...CASAS_DEL_BOSQUE_TASTING },
     ],
     includes: [
       "Transport with driver and guide",
@@ -71,9 +94,9 @@ export const TOURS_DATA: TourData[] = [
     touristType: "Wine enthusiasts",
     itinerary: [
       { time: "9:00", activity: "Hotel pick up" },
-      { time: "10:30", activity: "Bodegas RE vineyard tour and premium tasting" },
-      { time: "12:30", activity: CASAS_DEL_BOSQUE_TASTING },
-      { time: "14:00", activity: "Lunch at Casas del Bosque vineyard restaurant" },
+      { time: "10:30", ...BODEGAS_RE_TOUR },
+      { time: "12:30", ...CASAS_DEL_BOSQUE_TASTING },
+      { time: "14:00", ...CASAS_DEL_BOSQUE_LUNCH },
     ],
     includes: [
       "Transport with driver and guide",
@@ -90,14 +113,14 @@ export const TOURS_DATA: TourData[] = [
     title: "Wine Tours from Santiago",
     subtitle: "Full Day Experience",
     metaDescription:
-      "Full-day wine tour from Santiago to Casablanca Valley and Valparaíso, with winery visits, tastings, and a walking tour of Valparaíso's colorful hills. Prices from {{price}} per person.",
+      "Full-day wine tour from Santiago to Casablanca Valley and Valparaíso — winery visits, tastings and a walking tour of the hills. From {{price}}.",
     touristType: "Wine enthusiasts",
     itinerary: [
       { time: "8:00", activity: "Hotel pick up in Santiago" },
       { time: "10:00", activity: "Arrival in Casablanca Valley" },
-      { time: "10:30", activity: "Bodegas RE vineyard tour and premium tasting" },
-      { time: "12:30", activity: CASAS_DEL_BOSQUE_TASTING },
-      { time: "14:00", activity: "Lunch at Casas del Bosque vineyard restaurant" },
+      { time: "10:30", ...BODEGAS_RE_TOUR },
+      { time: "12:30", ...CASAS_DEL_BOSQUE_TASTING },
+      { time: "14:00", ...CASAS_DEL_BOSQUE_LUNCH },
       { time: "16:00", activity: "Scenic drive to Valparaíso" },
       { time: "16:30", activity: "Walking tour of Valparaíso's colorful hills, including Cerro Alegre and Cerro Concepción by funicular, and La Sebastiana (Pablo Neruda's house)" },
       { time: "18:00", activity: "Drop off in Valparaíso or return to Santiago" },

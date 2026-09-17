@@ -26,7 +26,8 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
 
   const navLinks = [
     { href: "/#about", label: "About" },
-    { href: "/#experiences", label: "Experiences" },
+    { href: "/tours", label: "Tours" },
+    { href: "/wineries", label: "Wineries" },
     { href: "/#testimonials", label: "Testimonials" },
     { href: "/faq", label: "FAQ" },
     { href: "#price-calculator", label: "Get a Quote" },

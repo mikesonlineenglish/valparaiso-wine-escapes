@@ -1,0 +1,141 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header";
+import Contact from "../../components/Contact";
+import Footer from "../../components/Footer";
+import { WINERIES } from "../../data/wineries";
+
+const description =
+  "Which wineries to visit in Chile's Casablanca Valley, what each is known for, and how to get there from Valparaíso or Santiago.";
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const homeUrl = new URL("/", Astro.site).href;
+
+const collectionPage = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Casablanca Valley Wineries Guide",
+  description,
+  url: pageUrl,
+  inLanguage: "en",
+  about: {
+    "@type": "Place",
+    name: "Casablanca Valley",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Wine Tours Valparaíso",
+    url: homeUrl,
+  },
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: WINERIES.map((winery, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Winery",
+        name: winery.name,
+        ...(winery.website ? { url: winery.website } : {}),
+        address: {
+          "@type": "PostalAddress",
+          ...(winery.addressLocality ? { addressLocality: winery.addressLocality } : {}),
+          addressRegion: winery.addressRegion,
+          addressCountry: winery.addressCountry,
+        },
+      },
+    })),
+  },
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+    { "@type": "ListItem", position: 2, name: "Wineries", item: pageUrl },
+  ],
+};
+---
+
+<Layout
+  title="Casablanca Valley Wineries Guide | Wine Tours Valparaíso"
+  description={description}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(collectionPage)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  </Fragment>
+
+  <div class="min-h-screen">
+    <Header client:load alwaysScrolled />
+
+    <section class="pt-40 pb-20 lg:pt-48 lg:pb-28 bg-background">
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mb-16 lg:mb-24">
+          <p class="font-body text-primary tracking-[0.2em] uppercase text-sm mb-4">
+            Casablanca Valley
+          </p>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight">
+            Casablanca Valley Wineries Guide
+          </h1>
+        </div>
+
+        <div class="space-y-20 lg:space-y-28">
+          {WINERIES.map((winery, index) => (
+            <article
+              id={winery.slug}
+              class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center scroll-mt-28"
+            >
+              <div class:list={["relative", index % 2 === 1 && "lg:order-2"]}>
+                <div class="relative overflow-hidden rounded-lg shadow-elevated">
+                  {winery.image ? (
+                    <img
+                      src={winery.image}
+                      alt={winery.imageAlt}
+                      class="w-full h-[360px] md:h-[420px] object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="w-full h-[360px] md:h-[420px] bg-secondary/40 flex items-center justify-center">
+                      <span class="font-body text-sm text-muted-foreground">
+                        Photo coming soon
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div class:list={[index % 2 === 1 && "lg:order-1"]}>
+                <h2 class="font-display text-2xl md:text-3xl font-semibold text-foreground mb-4">
+                  {winery.website ? (
+                    <a
+                      href={winery.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hover:text-primary transition-colors"
+                    >
+                      {winery.name}
+                    </a>
+                  ) : (
+                    winery.name
+                  )}
+                </h2>
+                <div class="space-y-4 text-muted-foreground leading-relaxed font-body">
+                  {winery.paragraphs.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                  {winery.tourNoteHtml && (
+                    <p set:html={winery.tourNoteHtml} />
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Contact client:load />
+    <Footer />
+  </div>
+</Layout>
