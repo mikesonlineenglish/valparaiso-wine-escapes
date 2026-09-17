@@ -33,3 +33,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://winetoursvalparaiso.com/sitemap-index.xml
+
+# llms.txt (https://llmstxt.org/) — not a standard robots directive, informational only:
+# https://winetoursvalparaiso.com/llms.txt

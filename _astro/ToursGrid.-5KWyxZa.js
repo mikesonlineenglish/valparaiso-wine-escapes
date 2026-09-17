@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime.BbQetHyD.js";import{n as t,r as n}from"./Experiences.BnznqVXx.js";var r=e(),i=()=>(0,r.jsx)(`div`,{className:`grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto`,children:n.map((e,n)=>(0,r.jsx)(t,{...e},n))});export{i as default};
