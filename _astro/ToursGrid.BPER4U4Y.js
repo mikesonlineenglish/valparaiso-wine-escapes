@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime.BbQetHyD.js";import{n as t}from"./url.Co0lTG7x.js";import{TourCard as n}from"./Experiences.B3FyXdte.js";var r=e(),i=()=>(0,r.jsx)(`div`,{className:`grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto`,children:t.map((e,t)=>(0,r.jsx)(n,{...e},t))});export{i as default};
