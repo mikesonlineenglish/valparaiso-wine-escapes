@@ -15,19 +15,19 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center">
+      <div className="relative z-10 container mx-auto px-6 text-center pt-28 md:pt-0">
         <div className="max-w-4xl mx-auto">
-          <p className="font-body text-wine-cream/80 tracking-[0.3em] uppercase text-sm mb-6 animate-fade-in">
+          <p className="font-body text-wine-cream/80 tracking-[0.3em] uppercase text-sm mb-4 md:mb-6 animate-fade-in">
             Discover Chilean Wine Country
           </p>
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-wine-cream font-semibold leading-tight mb-6 animate-fade-in-up">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-wine-cream font-semibold leading-tight mb-4 md:mb-6 animate-fade-in-up">
             Wine Tours{" "}
             <span className="block text-elegant text-wine-gold">Valparaíso</span>
             <span className="block font-body text-xs md:text-sm font-normal text-wine-cream/50 mt-3">
               from Santiago, Valparaíso & Viña del Mar
             </span>
           </h1>
-          <p className="font-body text-wine-cream/90 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-delay-1">
+          <p className="font-body text-wine-cream/90 text-lg md:text-xl max-w-2xl mx-auto mb-6 md:mb-10 leading-relaxed animate-fade-in-delay-1">
             Embark on an unforgettable journey through the prestigious vineyards
             of Chile's Casablanca Valley. Taste world-class wines and experience
             the beauty of Valparaíso.

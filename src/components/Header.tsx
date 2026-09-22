@@ -187,9 +187,9 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-2xl shadow-soft py-3"
-          : "bg-transparent py-6"
+        isScrolled || isMobileMenuOpen
+          ? "bg-background/95 backdrop-blur-2xl shadow-soft py-4 md:py-3"
+          : "bg-transparent py-7 md:py-6"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -198,7 +198,7 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
             src={logo}
             alt="Wine Tours Valparaiso"
             className={`transition-all duration-300 ${
-              isScrolled ? "h-12" : "h-16"
+              isScrolled || isMobileMenuOpen ? "h-12" : "h-16"
             }`}
           />
         </a>
@@ -255,7 +255,7 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
             href={normalizeHref("/#price-calculator")}
             onClick={() => trackEvent("cta_click", { button: "get_a_quote_header_mobile" })}
             className={`font-body text-xs tracking-wide uppercase px-4 py-2 rounded transition-all duration-300 ${
-              isScrolled
+              isScrolled || isMobileMenuOpen
                 ? "bg-primary text-primary-foreground hover:bg-primary/90"
                 : "bg-wine-cream text-wine-burgundy hover:bg-wine-cream/90"
             }`}
@@ -267,7 +267,9 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
             aria-expanded={isMobileMenuOpen}
             aria-label="Toggle navigation menu"
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-            className={`p-2 transition-colors ${isScrolled ? "text-foreground" : "text-wine-cream"}`}
+            className={`p-2 transition-colors ${
+              isScrolled || isMobileMenuOpen ? "text-foreground" : "text-wine-cream"
+            }`}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -277,9 +279,11 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
       {/* Mobile Menu — always rendered, visibility toggled via class so links stay in
           the server-rendered HTML regardless of JS/hydration state. */}
       <div
-        className={`md:hidden absolute top-full left-0 right-0 bg-background/98 backdrop-blur-lg shadow-elevated ${
-          isMobileMenuOpen ? "block" : "hidden"
-        } ${isScrolled ? "bg-background/95 backdrop-blur-2xl shadow-soft" : ""}`}
+        className={`md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-2xl shadow-soft transition-all duration-500 ${
+          isMobileMenuOpen
+            ? "visible opacity-100 translate-y-0"
+            : "invisible opacity-0 -translate-y-2 pointer-events-none"
+        }`}
       >
         <nav className="container mx-auto px-6 py-4 flex flex-col">
           <MobileAccordion label="Tours" items={TOURS_LINKS} onNavigate={closeMobileMenu} />
