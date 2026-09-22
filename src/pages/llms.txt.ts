@@ -96,8 +96,14 @@ function buildGuidesSection(site: URL): string {
   const faqUrl = new URL("/faq/", site).href;
   const faqDescription = `${capitalize(numberToWords(faqQuestionCount))} questions covering ${joinWithAnd(faqTopics)}.`;
 
+  const staysUrl = new URL("/where-to-stay/valparaiso/", site).href;
+  const staysDescription =
+    "Where to stay in Valparaíso by neighborhood and budget — boutique hotels and " +
+    "hostels in Cerro Alegre and Cerro Concepción, plus when Viña del Mar makes more sense.";
+
   const lines = [
     `- [Casablanca Valley Wineries Guide](${wineriesUrl}): ${wineriesDescription}`,
+    `- [Places to Stay in Valparaíso](${staysUrl}): ${staysDescription}`,
     `- [Frequently Asked Questions](${faqUrl}): ${faqDescription}`,
   ];
   return `## Guides and reference\n\n${lines.join("\n")}`;

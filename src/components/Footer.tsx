@@ -7,16 +7,20 @@ const QUICK_LINKS = [
   { label: "About", href: "/#about" },
   { label: "Tours", href: "/tours" },
   { label: "Wineries", href: "/wineries" },
-  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Get a Quote", href: "/#price-calculator" },
+];
+
+// Santiago's page doesn't exist yet — add its entry here once it ships.
+const PLAN_YOUR_TRIP_LINKS = [
+  { label: "Where to Stay — Valparaíso", href: "/where-to-stay/valparaiso" },
   { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "#contact" },
 ];
 
 const Footer = () => {
   return (
     <footer className="bg-wine-charcoal text-wine-cream py-16">
       <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-10">
+        <div className="grid md:grid-cols-5 gap-10">
           {/* Logo & About */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-4 mb-6">
@@ -39,6 +43,25 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2">
               {QUICK_LINKS.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={normalizeHref(link.href)}
+                    className="font-body text-wine-cream/70 hover:text-wine-gold transition-colors text-sm"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Plan Your Trip */}
+          <div>
+            <h4 className="font-display text-lg font-semibold mb-4">
+              Plan Your Trip
+            </h4>
+            <ul className="space-y-2">
+              {PLAN_YOUR_TRIP_LINKS.map((link) => (
                 <li key={link.label}>
                   <a
                     href={normalizeHref(link.href)}

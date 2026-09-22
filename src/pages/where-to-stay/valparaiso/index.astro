@@ -1,0 +1,210 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header";
+import Contact from "../../../components/Contact";
+import Footer from "../../../components/Footer";
+import { STAYS } from "../../../data/stays";
+import staysHero from "../../../assets/stays-hero.jpg?url";
+
+const description =
+  "Cerro Alegre, Concepción or Viña del Mar? Where to stay in Valparaíso by budget and trip style, from local guides running tours here since 2007.";
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const homeUrl = new URL("/", Astro.site).href;
+const organizationId = `${homeUrl}#organization`;
+
+const publisher = {
+  "@type": "Organization",
+  "@id": organizationId,
+  name: "Wine Tours Valparaíso",
+  url: homeUrl,
+};
+
+const author = {
+  "@type": "Person",
+  name: "Michael",
+  jobTitle: "Local Guide",
+  worksFor: { "@id": organizationId },
+};
+
+// Minimal Hotel entities for semantics and AI answers, not a Google rich result (hotel
+// carousels aren't covered by ItemList markup). No aggregateRating/review/url — that
+// data isn't ours to assert and none of it was supplied for these listings.
+const stayList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Recommended places to stay in Valparaíso",
+  numberOfItems: STAYS.length,
+  itemListElement: STAYS.map((stay, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Hotel",
+      name: stay.name,
+      description: stay.tagline,
+      address: {
+        "@type": "PostalAddress",
+        ...(stay.addressLocality ? { addressLocality: stay.addressLocality } : {}),
+        addressRegion: "Valparaíso Region",
+        addressCountry: "CL",
+      },
+    },
+  })),
+};
+
+const article = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Where to Stay in Valparaíso — Areas Picked by a Local Guide",
+  description,
+  url: pageUrl,
+  inLanguage: "en",
+  datePublished: "2026-09-22",
+  dateModified: "2026-09-22",
+  author,
+  publisher,
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+    { "@type": "ListItem", position: 2, name: "Where to Stay — Valparaíso", item: pageUrl },
+  ],
+};
+---
+
+<Layout
+  title="Where to Stay in Valparaíso: Best Areas & Hotels"
+  description={description}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(article)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(stayList)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  </Fragment>
+
+  <div class="min-h-screen">
+    <Header client:load />
+
+    <section class="relative pt-40 pb-20 lg:pt-48 lg:pb-28 overflow-hidden">
+      <div
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={`background-image: url(${staysHero})`}
+      >
+        <div class="absolute inset-0 gradient-hero" />
+      </div>
+
+      <div class="relative z-10 container mx-auto px-6">
+        <nav class="mb-6 text-sm font-body text-wine-cream/70" aria-label="Breadcrumb">
+          <a href="/" class="hover:text-wine-cream transition-colors">Home</a>
+          <span class="mx-2">/</span>
+          <span class="text-wine-cream">Where to Stay — Valparaíso</span>
+        </nav>
+
+        <p class="font-body text-wine-cream/80 tracking-[0.3em] uppercase text-sm mb-4">
+          Where to Stay
+        </p>
+        <h1 class="font-display text-4xl md:text-6xl lg:text-7xl text-wine-cream font-semibold leading-tight max-w-4xl">
+          Where to Stay in Valparaíso — Areas Picked by a Local Guide
+        </h1>
+      </div>
+    </section>
+
+    <section class="py-16 lg:py-20 bg-background">
+      <div class="container mx-auto px-6 max-w-3xl">
+        <div class="space-y-4 text-muted-foreground leading-relaxed font-body">
+          <p>
+            We've been guiding tours out of Valparaíso since 2007, which means we have
+            picked up guests from most of the hotels below more times than we can
+            count. This isn't a paid list — it's the hotels we'd point a friend toward.
+          </p>
+          <p>
+            Most of the best boutique hotels cluster in <strong>Cerro Alegre</strong> and
+            <strong> Cerro Concepción</strong>, the two hills above the port that give
+            Valparaíso its colorful, art-covered reputation — walkable, close to
+            restaurants and galleries, and steep enough that a funicular (ascensor) or a
+            short taxi ride helps at the end of the day.
+          </p>
+          <p>
+            Every property on this list can be a pickup point for our wine and city
+            tours — just tell us where you're staying when you book.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-20 lg:pb-28 bg-background">
+      <div class="container mx-auto px-6">
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10 text-center">
+          Best-rated hotels and hostels in Valparaíso
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto">
+          {STAYS.map((stay) => (
+            <article
+              id={stay.slug}
+              class="bg-card rounded-lg shadow-soft p-6 lg:p-8 scroll-mt-28"
+            >
+              <h3 class="font-display text-xl lg:text-2xl font-semibold text-foreground mb-1">
+                {stay.name}
+              </h3>
+              <p class="font-body text-primary text-sm mb-4">{stay.tagline}</p>
+
+              <div class="flex flex-wrap gap-2 mb-5">
+                {stay.tags.map((tag) => (
+                  <span class="font-body text-xs uppercase tracking-wide text-muted-foreground bg-secondary/50 rounded px-2 py-1">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <ul class="space-y-2 mb-4">
+                {stay.pros.map((pro) => (
+                  <li class="font-body text-sm text-muted-foreground flex gap-2">
+                    <span class="text-primary" aria-hidden="true">+</span>
+                    <span>{pro}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <ul class="space-y-2">
+                {stay.cons.map((con) => (
+                  <li class="font-body text-sm text-muted-foreground/80 flex gap-2">
+                    <span aria-hidden="true">−</span>
+                    <span>{con}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 lg:py-20 bg-secondary/50">
+      <div class="container mx-auto px-6 max-w-3xl">
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-foreground mb-6">
+          Not sure where to book?
+        </h2>
+        <div class="space-y-4 text-muted-foreground leading-relaxed font-body">
+          <p>
+            Tell us your budget and how many are in your group, and we'll point you to
+            the properties on this list most likely to have availability — or suggest
+            one that isn't. We'll also build your <a href="/tours" class="text-primary underline underline-offset-2 hover:text-primary/80">wine tour</a> or <a href="/wineries" class="text-primary underline underline-offset-2 hover:text-primary/80">winery visit</a> around wherever you land, with pickup included.
+          </p>
+        </div>
+        <a
+          href="/#contact"
+          class="inline-block mt-8 font-body text-sm tracking-wide uppercase px-5 py-3 rounded bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300"
+        >
+          Ask Us for Recommendations
+        </a>
+      </div>
+    </section>
+
+    <Contact client:load />
+    <Footer />
+  </div>
+</Layout>
