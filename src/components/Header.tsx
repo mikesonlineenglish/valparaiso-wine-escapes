@@ -24,6 +24,7 @@ const TOURS_LINKS: DropdownLink[] = [
 // Santiago's page doesn't exist yet — add its entry here once it ships.
 const PLAN_YOUR_TRIP_LINKS: DropdownLink[] = [
   { href: "/where-to-stay/valparaiso", label: "Where to Stay — Valparaíso" },
+  { href: "/gallery", label: "Photo Gallery" },
   { href: "/faq", label: "FAQ" },
 ];
 

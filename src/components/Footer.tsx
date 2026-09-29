@@ -13,6 +13,7 @@ const QUICK_LINKS = [
 // Santiago's page doesn't exist yet — add its entry here once it ships.
 const PLAN_YOUR_TRIP_LINKS = [
   { label: "Where to Stay — Valparaíso", href: "/where-to-stay/valparaiso" },
+  { label: "Photo Gallery", href: "/gallery" },
   { label: "FAQ", href: "/faq" },
 ];
 
