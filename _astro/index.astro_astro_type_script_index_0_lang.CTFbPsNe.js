@@ -1,0 +1,1 @@
+import{t as e}from"./analytics.Nb9XDPv5.js";document.querySelectorAll(`a[href]`).forEach(t=>{if(t.closest(`#contact`))return;let n=t.getAttribute(`href`)??``,r=n.startsWith(`mailto:`)?`email_click`:n.startsWith(`tel:`)?`phone_click`:n.includes(`wa.me/`)?`whatsapp_click`:null;r&&t.addEventListener(`click`,()=>{e(r,{button:`${r.replace(`_click`,``)}_faq`})})});
