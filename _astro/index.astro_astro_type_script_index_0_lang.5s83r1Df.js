@@ -1,0 +1,1 @@
+import{t as e}from"./analytics.Nb9XDPv5.js";document.querySelectorAll(`#privacy-policy a[href^="mailto:"]`).forEach(t=>{t.addEventListener(`click`,()=>{e(`email_click`,{button:`email_privacy`})})});
