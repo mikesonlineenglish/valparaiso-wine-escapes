@@ -98,10 +98,7 @@ const NavDropdown = ({
             key={item.href}
             href={normalizeHref(item.href)}
             role="menuitem"
-            onClick={() => {
-              setOpen(false);
-              trackEvent("nav_click", { button: item.label.toLowerCase().replace(/ /g, "_") });
-            }}
+            onClick={() => setOpen(false)}
             className="block px-4 py-2 font-body text-sm text-foreground transition-colors hover:bg-secondary hover:text-primary"
           >
             {item.label}
@@ -145,10 +142,7 @@ const MobileAccordion = ({
             <a
               key={item.href}
               href={normalizeHref(item.href)}
-              onClick={() => {
-                onNavigate();
-                trackEvent("nav_click", { button: `${item.label.toLowerCase().replace(/ /g, "_")}_mobile` });
-              }}
+              onClick={onNavigate}
               className="py-2 font-body text-sm text-muted-foreground hover:text-primary"
             >
               {item.label}
@@ -210,7 +204,6 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
 
           <a
             href={normalizeHref("/wineries")}
-            onClick={() => trackEvent("nav_click", { button: "wineries" })}
             className={`font-body text-sm tracking-wide uppercase transition-colors duration-300 ${
               isScrolled
                 ? "text-foreground hover:text-primary"
@@ -224,7 +217,6 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
 
           <a
             href={normalizeHref("/#about")}
-            onClick={() => trackEvent("nav_click", { button: "about" })}
             className={`font-body text-sm tracking-wide uppercase transition-colors duration-300 ${
               isScrolled
                 ? "text-foreground hover:text-primary"
@@ -291,10 +283,7 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
 
           <a
             href={normalizeHref("/wineries")}
-            onClick={() => {
-              closeMobileMenu();
-              trackEvent("nav_click", { button: "wineries_mobile" });
-            }}
+            onClick={closeMobileMenu}
             className="py-3 border-b border-border font-body text-sm tracking-wide uppercase text-foreground hover:text-primary"
           >
             Wineries
@@ -304,10 +293,7 @@ const Header = ({ alwaysScrolled = false }: HeaderProps) => {
 
           <a
             href={normalizeHref("/#about")}
-            onClick={() => {
-              closeMobileMenu();
-              trackEvent("nav_click", { button: "about_mobile" });
-            }}
+            onClick={closeMobileMenu}
             className="py-3 border-b border-border font-body text-sm tracking-wide uppercase text-foreground hover:text-primary"
           >
             About

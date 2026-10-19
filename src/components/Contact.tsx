@@ -1,15 +1,17 @@
 import { Mail, Phone, MapPin, Clock, Instagram, Facebook, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useForm, ValidationError } from '@formspree/react';
+import { useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
 
 const Contact = () => {
   const [state, handleSubmit] = useForm("xwvneape");
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    trackEvent("form_submit", { form: "contact_form" });
-    handleSubmit(e);
-  };
+  useEffect(() => {
+    if (state.succeeded) {
+      trackEvent("generate_lead", { link_location: "contact-form" });
+    }
+  }, [state.succeeded]);
 
   return (
     <section id="contact" className="py-24 lg:py-32 bg-primary text-primary-foreground">
@@ -111,14 +113,30 @@ const Contact = () => {
               </p>
               <div className="flex gap-4">
                 <a
-                  href="https://www.instagram.com/wine.tours.valparaiso/"
+                  href="https://www.instagram.com/winetoursvalparaiso"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram @winetoursvalparaiso (opens in a new tab)"
                   onClick={() => trackEvent("social_click", { button: "instagram" })}
                   className="w-10 h-10 rounded-full bg-wine-gold/20 flex items-center justify-center hover:bg-wine-gold/30 transition-colors"
                 >
                   <Instagram size={18} className="text-wine-gold" />
                 </a>
                 <a
+                  href="https://www.instagram.com/wine.tours.valparaiso/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram @wine.tours.valparaiso (opens in a new tab)"
+                  onClick={() => trackEvent("social_click", { button: "instagram_2" })}
+                  className="w-10 h-10 rounded-full bg-wine-gold/20 flex items-center justify-center hover:bg-wine-gold/30 transition-colors"
+                >
+                  <Instagram size={18} className="text-wine-gold" />
+                </a>
+                <a
                   href="https://www.facebook.com/winetoursvalparaiso/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook (opens in a new tab)"
                   onClick={() => trackEvent("social_click", { button: "facebook" })}
                   className="w-10 h-10 rounded-full bg-wine-gold/20 flex items-center justify-center hover:bg-wine-gold/30 transition-colors"
                 >
@@ -147,7 +165,7 @@ const Contact = () => {
                 <h3 className="font-display text-2xl font-semibold mb-6">
                   Request a Tour
                 </h3>
-                <form onSubmit={onSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit}className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label htmlFor="firstName" className="font-body text-sm text-muted-foreground block mb-2">
@@ -282,6 +300,13 @@ const Contact = () => {
                   >
                     {state.submitting ? 'Sending...' : 'Send Inquiry'}
                   </Button>
+
+                  <p className="font-body text-xs text-muted-foreground text-center">
+                    By sending this form you agree to our{" "}
+                    <a href="/privacy/" className="underline underline-offset-2 hover:text-foreground">
+                      Privacy Policy
+                    </a>
+                  </p>
 
                   <p className="font-body text-xs text-muted-foreground text-center">
                     We typically respond within 24 hours

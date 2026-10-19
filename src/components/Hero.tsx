@@ -56,9 +56,7 @@ const Hero = () => {
       {/* Scroll Indicator */}
       <a
         href="#about"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-wine-cream/70 hover:text-wine-cream transition-colors animate-bounce"
-        onClick={() => trackEvent("scroll_click", { button: "scroll_arrow_hero" })}
-      >
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-wine-cream/70 hover:text-wine-cream transition-colors animate-bounce"      >
         <ChevronDown size={32} />
       </a>
     </section>

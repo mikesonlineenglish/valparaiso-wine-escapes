@@ -112,4 +112,26 @@ const description =
     <Contact client:load />
     <Footer />
   </div>
+
+  <script>
+    import { trackEvent } from "../../lib/analytics";
+
+    // Covers the bottom box and the links inside FAQ answers (rendered from faq.json).
+    // Contact section links are tracked by Contact.tsx, so it is excluded here.
+    document.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
+      if (link.closest("#contact")) return;
+      const href = link.getAttribute("href") ?? "";
+      const event = href.startsWith("mailto:")
+        ? "email_click"
+        : href.startsWith("tel:")
+          ? "phone_click"
+          : href.includes("wa.me/")
+            ? "whatsapp_click"
+            : null;
+      if (!event) return;
+      link.addEventListener("click", () => {
+        trackEvent(event, { button: `${event.replace("_click", "")}_faq` });
+      });
+    });
+  </script>
 </Layout>

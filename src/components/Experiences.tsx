@@ -102,7 +102,10 @@ export const TourCard = ({
               href="#contact"
               onClick={(e) => {
                 e.stopPropagation();
-                trackEvent("cta_click", { button: `book_now_${title.toLowerCase().replace(/ /g, "_")}` });
+                trackEvent("tour_cta_click", {
+                  tour: slug,
+                  link_location: window.location.pathname.startsWith("/tours") ? "tours-page" : "home-page",
+                });
               }}
             >Book Now</a>
           </Button>

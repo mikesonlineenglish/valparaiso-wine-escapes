@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { trackEvent } from "@/lib/analytics";
 
 export interface GalleryPhoto {
   alt: string;
@@ -32,7 +31,6 @@ const PhotoGallery = ({ photos }: PhotoGalleryProps) => {
   );
 
   const open = (index: number) => {
-    trackEvent("gallery_open", { photo: index + 1 });
     goTo(index);
   };
 

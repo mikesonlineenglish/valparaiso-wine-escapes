@@ -103,7 +103,7 @@ const Footer = () => {
           </p>
           <div className="flex gap-6">
             <a
-              href="#"
+              href={normalizeHref("/privacy")}
               className="font-body text-sm text-wine-cream/50 hover:text-wine-gold transition-colors"
             >
               Privacy Policy

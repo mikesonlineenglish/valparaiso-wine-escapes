@@ -3,6 +3,7 @@ import { Calculator, Users, MapPin, ChevronDown, Wine, Check } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { LOCATION_OPTIONS, TOURS, getPrice } from "@/lib/pricing";
 import { formatPrice } from "@/lib/currency";
+import { trackEvent } from "@/lib/analytics";
 
 interface SelectFieldProps {
   label: string;
@@ -46,9 +47,16 @@ const PriceCalculator = ({ initialTourId = "", embedded = false }: PriceCalculat
   const [selectedTour, setSelectedTour] = useState(initialTourId);
   const [calculated, setCalculated] = useState(false);
 
-  const isFormValid = guests > 0 && pickup && dropoff && selectedTour;
+  const isFormValid = guests >= 2 && pickup && dropoff && selectedTour;
 
-  const handleCalculate = () => { if (isFormValid) setCalculated(true); };
+  const soloNotice = (
+    <>
+      Please note that all of our tours require a minimum of 2 participants, so if you are a solo traveler please{" "}
+      <a href="#contact" className="underline underline-offset-2 hover:text-foreground transition-colors">contact us</a>
+    </>
+  );
+
+  const handleCalculate =() => { if (isFormValid) setCalculated(true); };
   const handleReset = () => { setCalculated(false); setGuests(2); setPickup(""); setDropoff(""); setSelectedTour(initialTourId); };
 
   const pricePerPerson = calculated ? getPrice(selectedTour, guests, pickup, dropoff) : null;
@@ -78,7 +86,7 @@ const PriceCalculator = ({ initialTourId = "", embedded = false }: PriceCalculat
                         className="px-5 py-3.5 text-xl font-light text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors select-none">+</button>
                     </div>
                     <p className="font-body text-xs text-muted-foreground">
-                      {guests === 1 ? "Solo traveler" : guests <= 4 ? "Small group — intimate experience" : guests <= 5 ? "Medium group — great value" : guests <= 10 ? "Large group — minibus pricing" : "Group — best per-person rate"}
+                      {guests === 1 ? soloNotice : guests <= 4 ? "Small group — intimate experience" : guests <= 5 ? "Medium group — great value" : guests <= 10 ? "Large group — minibus pricing" : "Group — best per-person rate"}
                     </p>
                   </div>
 
@@ -122,7 +130,7 @@ const PriceCalculator = ({ initialTourId = "", embedded = false }: PriceCalculat
                 {!calculated ? (
                   <div className="flex flex-col sm:flex-row items-center gap-4 justify-between">
                     <p className="font-body text-sm text-muted-foreground text-center sm:text-left">
-                      {isFormValid ? "All set — click to see your estimate" : "Fill in all fields to get your estimate"}
+                      {guests === 1 ? soloNotice : isFormValid ? "All set — click to see your estimate" : "Fill in all fields to get your estimate"}
                     </p>
                     <Button variant="wine" size="lg" onClick={handleCalculate} disabled={!isFormValid} className="min-w-[200px]">
                       <Calculator size={18} className="mr-2" />Calculate Price
@@ -165,7 +173,13 @@ const PriceCalculator = ({ initialTourId = "", embedded = false }: PriceCalculat
                           Start over
                         </button>
                         <Button variant="wine" size="sm" asChild>
-                          <a href="#contact">Book This Tour</a>
+                          <a
+                            href="#contact"
+                            onClick={() => trackEvent("tour_cta_click", {
+                              tour: selectedTour,
+                              link_location: embedded ? "tour-page-calculator" : "price-calculator",
+                            })}
+                          >Book This Tour</a>
                         </Button>
                       </div>
                     </div>
